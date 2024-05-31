@@ -1,0 +1,9 @@
+{
+    "token": "token-test",
+    "type": "Bearer",
+    "id": 1,
+    "username": "yoga-user@studio.com",
+    "firstName": "User",
+    "lastName": "User",
+    "admin": false
+}
