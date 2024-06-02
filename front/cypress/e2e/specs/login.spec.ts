@@ -1,18 +1,14 @@
-import '../../support/commands';
 
 export default function loginSpec() {
     describe('Login spec', () => {
+
         it('Login successfully', () => {
             cy.login();
-
             cy.url().should('include', '/sessions')
         })
 
         it('Login failed - error credentials', () => {
             cy.visit('/login')
-
-
-
             cy.get('input[formControlName=email]').type("nimportequoi@gmail.com")
             cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
             cy.get('.error').should('contain', 'An error occurred')

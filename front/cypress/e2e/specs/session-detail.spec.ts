@@ -1,4 +1,3 @@
-import '../../support/commands';
 
 export default function sessionDetailSpec() {
     describe("Session Detail spec", () => {
@@ -37,6 +36,25 @@ export default function sessionDetailSpec() {
 
             // Wait for the intercepted request to complete
             cy.wait('@postParticipate').its('response.statusCode').should('eq', 200);
+        });
+
+        it("Unparticipate successfully", () => {
+            // Intercept the participate network request
+            cy.intercept('DELETE', '**/participate/**', {
+                statusCode: 200,
+                body: {
+                    message: 'Unparticipation successful'
+                },
+            }).as('deleteParticipate');
+
+            // Show session details
+            cy.showSessionDetails({ participate: true });
+
+            // Ensure the participate button is present and click it
+            cy.get('button[color="warn"]').should('contain.text', 'Do not participate').click();
+
+            // Wait for the intercepted request to complete
+            cy.wait('@deleteParticipate').its('response.statusCode').should('eq', 200);
         });
     });
 }

@@ -1,4 +1,3 @@
-import '../../support/commands';
 
 export default function sessionsSpec() {
     describe("Sessions spec", () => {

@@ -1,58 +1,57 @@
-import '../../support/commands';
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { MeComponent } from "../../../src/app/components/me/me.component";
-import { RouterTestingModule } from "@angular/router/testing";
-import { AppComponent } from "../../../src/app/app.component";
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
-import { HttpClientModule } from "@angular/common/http";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { SessionService } from "../../../src/app/services/session.service";
-import { UserService } from "../../../src/app/services/user.service";
-import { DebugElement, NgZone } from "@angular/core";
-import { Router } from "@angular/router";
-import {mount} from "cypress/angular";
 
 export default function meSpec() {
-    describe('MeComponent', () => {
+    describe('Me Spec', () => {
 
-        let component: MeComponent;
-        let fixture: ComponentFixture<MeComponent>;
-        let debugElement: DebugElement;
-        let router: Router;
-        let userService: UserService;
-        let sessionService: SessionService;
-        let ngZone: NgZone;
-        let matSnackBar: MatSnackBar;
-
-        const mockSessionService = {
-            sessionInformation: {
-                admin: true,
-                id: 1
-            }
-        }
-
-        before(() => {
-
+        it('Redirect to loin page', () => {
+            cy.visit('/me');
+            cy.url().should('contain', '/login');
         });
 
-        // JE SUIS ICI
-        it('should display user information', () => {
+        it('Display user information', () => {
+            cy.intercept('GET', '/api/user/*', {
+                fixture: 'me.res.json'
+            }).as('me')
             cy.login();
-            const sessionService = new SessionService()
-            sessionService.logIn({
-                token: "string",
-                type: "string",
-                id: 1,
-                username: "string",
-                firstName: "string",
-                lastName: "string",
-                admin: true
-            });
-            cy.get('[data-test-id="me-account"]').should("exist").click();
-            cy.url().should('contain', 'me');
+            cy.get('[routerlink="me"]').should("exist").click();
+            cy.get('mat-card-content > div')
+                .should('contain', 'Name: User USER')
+                .should('contain', 'Email: yoga@studio.com')
+                .should('contain', 'Delete')
+                .should('contain', 'May 16, 2024')
+                .should('contain', 'June 16, 2024');
+        });
+
+        it('Display admin information', () => {
+            cy.intercept('GET', '/api/user/*', {
+                fixture: 'me-admin.res.json'
+            }).as('me-admin')
+            cy.login();
+            cy.get('[routerlink="me"]').should("exist").click();
+            cy.get('mat-card-content > div')
+                .should('contain', 'Name: Admin ADMIN')
+                .should('contain', 'You are admin')
+        });
+
+        it('Delete user', () => {
+            cy.intercept('GET', '/api/user/*', {
+                fixture: 'me.res.json'
+            }).as('me')
+            cy.intercept('DELETE', '/api/user/*', {
+                statusCode: 200
+            }).as('deleteUser')
+            cy.login();
+            cy.get('[routerlink="me"]').should("exist").click();
+            cy.get('[color="warn"]').should('contain', 'Delete').click();
+            cy.url().should('eq', 'http://localhost:4200/');
+        });
+
+        it('Go back', () => {
+            cy.intercept('GET', '/api/user/*', {
+                fixture: 'me.res.json'
+            }).as('me')
+            cy.login();
+            cy.get('[routerlink="me"]').should("exist").click();
+            cy.get('mat-card-title > div > button').should('contain', 'arrow_back').click();
         });
     });
 }

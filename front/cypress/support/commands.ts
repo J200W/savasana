@@ -23,10 +23,7 @@ Cypress.Commands.add('login', ({ admin = false } = {}) => {
     cy.request('POST', 'http://localhost:8080/api/auth/login', {
         email: "yoga@studio.com",
         password: "test!1234"
-    }).then((resp) => {
-        // Set the received token or session
-        window.localStorage.setItem('authToken', resp.body.token);
-    });
+    })
 });
 
 Cypress.Commands.add('fillRegistrationForm', ({ firstName, lastName, email, password }) => {
@@ -36,8 +33,14 @@ Cypress.Commands.add('fillRegistrationForm', ({ firstName, lastName, email, pass
     cy.get('input[formControlName=password]').type(`${password}{enter}`);
 });
 
-Cypress.Commands.add('showSessionDetails', () => {
-    cy.intercept('GET', '/api/session/*', { fixture: 'session.res' }).as('getSession');
+Cypress.Commands.add('showSessionDetails', ({ participate = false } = {}) => {
+    if (participate) {
+        cy.intercept('GET', '/api/session/*', { fixture: 'session-participated.res' }).as('getSession');
+    }
+    else {
+        cy.intercept('GET', '/api/session/*', { fixture: 'session.res' }).as('getSession');
+    }
+
     cy.intercept('GET', /\/api\/teacher\/\d+/, { fixture: 'teacher.res' }).as('getTeacher');
     cy.login();
     cy.contains('mat-card-actions button', 'Detail').should('be.visible').click();

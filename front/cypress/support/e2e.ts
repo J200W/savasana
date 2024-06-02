@@ -14,6 +14,16 @@
 // ***********************************************************
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
-// import './commands';
+import './commands';
 
 import '@cypress/code-coverage/support';
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            login: typeof login,
+            fillRegistrationForm: typeof fillRegistrationForm,
+            showSessionDetails: typeof showSessionDetails,
+        }
+    }
+}
