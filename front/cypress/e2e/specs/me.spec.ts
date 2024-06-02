@@ -51,7 +51,8 @@ export default function meSpec() {
                 lastName: "string",
                 admin: true
             });
-            cy.visit('/me');
+            cy.get('[data-test-id="me-account"]').should("exist").click();
+            cy.url().should('contain', 'me');
         });
     });
 }

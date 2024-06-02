@@ -388,7 +388,7 @@
       "0": 1,
       "1": 1,
       "2": 1,
-      "3": 54,
+      "3": 55,
       "4": 1,
       "5": 1,
       "6": 1,
@@ -404,7 +404,7 @@
     "f": {
       "0": 1,
       "1": 1,
-      "2": 54,
+      "2": 55,
       "3": 1,
       "4": 0,
       "5": 1,
@@ -418,7 +418,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAASA,eAAT,QAA4C,MAA5C;;AAMA,WAAaC,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAH3BC;MAKS,gBAAW,KAAX;MAGC,uBAAkB,IAAIF,eAAJ,CAA6B,KAAKG,QAAlC,CAAlB;IAqBT;;IAnBQC,SAAS;MACd,OAAO,KAAKC,eAAL,CAAqBC,YAArB,EAAP;IACD;;IAEMC,KAAK,CAACC,IAAD,EAAyB;MACnC,KAAKC,kBAAL,GAA0BD,IAA1B;MACA,KAAKL,QAAL,GAAgB,IAAhB;MACA,KAAKO,IAAL;IACD;;IAEMC,MAAM;MACX,KAAKF,kBAAL,GAA0BG,SAA1B;MACA,KAAKT,QAAL,GAAgB,KAAhB;MACA,KAAKO,IAAL;IACD;;IAEOA,IAAI;MACV,KAAKL,eAAL,CAAqBK,IAArB,CAA0B,KAAKP,QAA/B;IACD;;EAzBwB;;;qBAAdF;EAAc;;;WAAdA;IAAcY,SAAdZ,cAAc;IAAAa,YAFb;;EAEd,OAAab,cAAb;AAAA",
+      "mappings": "AACA,SAAQA,eAAR,QAA0C,MAA1C;;AAMA,WAAaC,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAH3BC;MAKW,gBAAW,KAAX;MAGC,uBAAkB,IAAIF,eAAJ,CAA6B,KAAKG,QAAlC,CAAlB;IAqBX;;IAnBUC,SAAS;MACZ,OAAO,KAAKC,eAAL,CAAqBC,YAArB,EAAP;IACH;;IAEMC,KAAK,CAACC,IAAD,EAAyB;MACjC,KAAKC,kBAAL,GAA0BD,IAA1B;MACA,KAAKL,QAAL,GAAgB,IAAhB;MACA,KAAKO,IAAL;IACH;;IAEMC,MAAM;MACT,KAAKF,kBAAL,GAA0BG,SAA1B;MACA,KAAKT,QAAL,GAAgB,KAAhB;MACA,KAAKO,IAAL;IACH;;IAEOA,IAAI;MACR,KAAKL,eAAL,CAAqBK,IAArB,CAA0B,KAAKP,QAA/B;IACH;;EAzBsB;;;qBAAdF;EAAc;;;WAAdA;IAAcY,SAAdZ,cAAc;IAAAa,YAFX;;EAEhB,OAAab,cAAb;AAAA",
       "names": [
         "BehaviorSubject",
         "SessionService",
@@ -441,11 +441,11 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/services/session.service.ts"
       ],
       "sourcesContent": [
-        "import { Injectable } from '@angular/core';\nimport { BehaviorSubject, Observable } from 'rxjs';\nimport { SessionInformation } from '../interfaces/sessionInformation.interface';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class SessionService {\n\n  public isLogged = false;\n  public sessionInformation: SessionInformation | undefined;\n\n  private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);\n\n  public $isLogged(): Observable<boolean> {\n    return this.isLoggedSubject.asObservable();\n  }\n\n  public logIn(user: SessionInformation): void {\n    this.sessionInformation = user;\n    this.isLogged = true;\n    this.next();\n  }\n\n  public logOut(): void {\n    this.sessionInformation = undefined;\n    this.isLogged = false;\n    this.next();\n  }\n\n  private next(): void {\n    this.isLoggedSubject.next(this.isLogged);\n  }\n}\n"
+        "import {Injectable} from '@angular/core';\nimport {BehaviorSubject, Observable} from 'rxjs';\nimport {SessionInformation} from '../interfaces/sessionInformation.interface';\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class SessionService {\n\n    public isLogged = false;\n    public sessionInformation: SessionInformation | undefined;\n\n    private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);\n\n    public $isLogged(): Observable<boolean> {\n        return this.isLoggedSubject.asObservable();\n    }\n\n    public logIn(user: SessionInformation): void {\n        this.sessionInformation = user;\n        this.isLogged = true;\n        this.next();\n    }\n\n    public logOut(): void {\n        this.sessionInformation = undefined;\n        this.isLogged = false;\n        this.next();\n    }\n\n    private next(): void {\n        this.isLoggedSubject.next(this.isLogged);\n    }\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "587b5d00cbfa651976b8c10ffb284b600c1b4abc"
+    "hash": "1c5f18942da3b4734a5f747e5aab419d4262c253"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/services/user.service.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/services/user.service.ts",
@@ -703,31 +703,31 @@
     },
     "s": {
       "0": 1,
-      "1": 0,
-      "2": 0,
-      "3": 0,
+      "1": 1,
+      "2": 1,
+      "3": 1,
       "4": 0,
       "5": 1,
-      "6": 0,
+      "6": 1,
       "7": 1,
       "8": 1
     },
     "f": {
       "0": 1,
-      "1": 0,
-      "2": 0,
+      "1": 1,
+      "2": 1,
       "3": 0,
-      "4": 0
+      "4": 1
     },
     "b": {
       "0": [
-        0,
-        0
+        1,
+        1
       ]
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": ";;AAQA,WAAaA,WAAb;EAAM,MAAOA,WAAP,CAAkB;IAItBC,YAAoBC,UAApB,EAA0C;MAAtB;MAFZ,mBAAc,UAAd;IAEuC;;IAExCC,OAAO,CAACC,EAAD,EAAW;MACvB,OAAO,KAAKF,UAAL,CAAgBG,GAAhB,CAA0B,GAAG,KAAKC,WAAW,IAAIF,EAAE,EAAnD,CAAP;IACD;;IAEMG,MAAM,CAACH,EAAD,EAAW;MACtB,OAAO,KAAKF,UAAL,CAAgBK,MAAhB,CAAuB,GAAG,KAAKD,WAAW,IAAIF,EAAE,EAAhD,CAAP;IACD;;EAZqB;;;qBAAXJ,aAAWQ;EAAA;;;WAAXR;IAAWS,SAAXT,WAAW;IAAAU,YAFV;;EAEd,OAAaV,WAAb;AAAA",
+      "mappings": ";;AAQA,WAAaA,WAAb;EAAM,MAAOA,WAAP,CAAkB;IAIpBC,YAAoBC,UAApB,EAA0C;MAAtB;MAFZ,mBAAc,UAAd;IAGP;;IAEMC,OAAO,CAACC,EAAD,EAAW;MACrB,OAAO,KAAKF,UAAL,CAAgBG,GAAhB,CAA0B,GAAG,KAAKC,WAAW,IAAIF,EAAE,EAAnD,CAAP;IACH;;IAEMG,MAAM,CAACH,EAAD,EAAW;MACpB,OAAO,KAAKF,UAAL,CAAgBK,MAAhB,CAAuB,GAAG,KAAKD,WAAW,IAAIF,EAAE,EAAhD,CAAP;IACH;;EAbmB;;;qBAAXJ,aAAWQ;EAAA;;;WAAXR;IAAWS,SAAXT,WAAW;IAAAU,YAFR;;EAEhB,OAAaV,WAAb;AAAA",
       "names": [
         "UserService",
         "constructor",
@@ -746,11 +746,11 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/services/user.service.ts"
       ],
       "sourcesContent": [
-        "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { User } from '../interfaces/user.interface';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class UserService {\n\n  private pathService = 'api/user';\n\n  constructor(private httpClient: HttpClient) { }\n\n  public getById(id: string): Observable<User> {\n    return this.httpClient.get<User>(`${this.pathService}/${id}`);\n  }\n\n  public delete(id: string): Observable<any> {\n    return this.httpClient.delete(`${this.pathService}/${id}`);\n  }\n}\n"
+        "import {HttpClient} from '@angular/common/http';\nimport {Injectable} from '@angular/core';\nimport {Observable} from 'rxjs';\nimport {User} from '../interfaces/user.interface';\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class UserService {\n\n    private pathService = 'api/user';\n\n    constructor(private httpClient: HttpClient) {\n    }\n\n    public getById(id: string): Observable<User> {\n        return this.httpClient.get<User>(`${this.pathService}/${id}`);\n    }\n\n    public delete(id: string): Observable<any> {\n        return this.httpClient.delete(`${this.pathService}/${id}`);\n    }\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "179d374fe098908ddbc8e12fb0fae89029151c7b"
+    "hash": "54151d464293e8775a88ce02df8ad8288b004e0e"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/components/me/me.component.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/components/me/me.component.ts",
@@ -2286,11 +2286,11 @@
       "54": 0,
       "55": 0,
       "56": 1,
-      "57": 0,
-      "58": 0,
-      "59": 0,
-      "60": 0,
-      "61": 0,
+      "57": 1,
+      "58": 1,
+      "59": 1,
+      "60": 1,
+      "61": 1,
       "62": 0,
       "63": 0,
       "64": 0,
@@ -2298,24 +2298,24 @@
       "66": 0,
       "67": 0,
       "68": 1,
-      "69": 0,
+      "69": 1,
       "70": 1,
-      "71": 0,
-      "72": 0,
-      "73": 0,
+      "71": 5,
+      "72": 1,
+      "73": 1,
       "74": 0,
-      "75": 0,
-      "76": 0,
-      "77": 0,
-      "78": 0,
-      "79": 0,
-      "80": 0,
-      "81": 0,
-      "82": 0,
-      "83": 0,
-      "84": 0,
-      "85": 0,
-      "86": 0,
+      "75": 1,
+      "76": 1,
+      "77": 1,
+      "78": 1,
+      "79": 1,
+      "80": 1,
+      "81": 1,
+      "82": 1,
+      "83": 1,
+      "84": 5,
+      "85": 4,
+      "86": 4,
       "87": 1
     },
     "f": {
@@ -2324,14 +2324,14 @@
       "2": 0,
       "3": 0,
       "4": 1,
-      "5": 0,
-      "6": 0,
+      "5": 1,
+      "6": 1,
       "7": 0,
       "8": 0,
       "9": 0,
       "10": 0,
-      "11": 0,
-      "12": 0,
+      "11": 1,
+      "12": 5,
       "13": 0
     },
     "b": {
@@ -2352,16 +2352,16 @@
         0
       ],
       "4": [
-        0,
-        0
+        1,
+        1
       ],
       "5": [
-        0,
-        0
+        1,
+        4
       ],
       "6": [
-        0,
-        0
+        4,
+        1
       ]
     },
     "inputSourceMap": {
@@ -2994,10 +2994,10 @@
       "0": 1,
       "1": 1,
       "2": 1,
-      "3": 1,
+      "3": 2,
       "4": 0,
       "5": 0,
-      "6": 1,
+      "6": 2,
       "7": 1,
       "8": 1,
       "9": 1,
@@ -3006,13 +3006,13 @@
     "f": {
       "0": 1,
       "1": 1,
-      "2": 1,
+      "2": 2,
       "3": 1
     },
     "b": {
       "0": [
         0,
-        1
+        2
       ],
       "1": [
         1,
@@ -3715,7 +3715,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAASA,YAAT,QAAqC,iBAArC;AACA,SAASC,WAAT,QAA4B,8BAA5B;AACA,SAASC,iBAAT,QAAkC,4CAAlC;AACA,SAASC,SAAT,QAA0B,qBAA1B;AACA,SAASC,WAAT,QAA4B,uBAA5B;;;AAEA,MAAMC,MAAM,GAAW,CACrB;EACEC,IAAI,EAAE,EADR;EAEEC,WAAW,EAAE,CAACH,WAAD,CAFf;EAGEI,YAAY,EAAE,MAAM,OAAO,6BAAP,EAAsCC,IAAtC,CAA2CC,CAAC,IAAIA,CAAC,CAACC,UAAlD;AAHtB,CADqB,EAMrB;EACEL,IAAI,EAAE,UADR;EAEEC,WAAW,EAAE,CAACJ,SAAD,CAFf;EAGEK,YAAY,EAAE,MAAM,OAAO,qCAAP,EAA8CC,IAA9C,CAAmDC,CAAC,IAAIA,CAAC,CAACE,cAA1D;AAHtB,CANqB,EAWrB;EACEN,IAAI,EAAE,IADR;EAEEC,WAAW,EAAE,CAACJ,SAAD,CAFf;EAGEU,SAAS,EAAEZ;AAHb,CAXqB,EAgBrB;EAAEK,IAAI,EAAE,KAAR;EAAeO,SAAS,EAAEX;AAA1B,CAhBqB,EAiBrB;EAAEI,IAAI,EAAE,IAAR;EAAcQ,UAAU,EAAE;AAA1B,CAjBqB,CAAvB;AAwBA,WAAaC,gBAAb;EAAM,MAAOA,gBAAP,CAAuB;;;qBAAhBA;EAAgB;;;UAAhBA;;;cAHDf,YAAY,CAACgB,OAAb,CAAqBX,MAArB,GACAL;;EAEZ,OAAae,gBAAb;AAAA",
+      "mappings": "AACA,SAAQA,YAAR,QAAmC,iBAAnC;AACA,SAAQC,WAAR,QAA0B,8BAA1B;AACA,SAAQC,iBAAR,QAAgC,4CAAhC;AACA,SAAQC,SAAR,QAAwB,qBAAxB;AACA,SAAQC,WAAR,QAA0B,uBAA1B;;;AAEA,MAAMC,MAAM,GAAW,CACnB;EACIC,IAAI,EAAE,EADV;EAEIC,WAAW,EAAE,CAACH,WAAD,CAFjB;EAGII,YAAY,EAAE,MAAM,OAAO,6BAAP,EAAsCC,IAAtC,CAA2CC,CAAC,IAAIA,CAAC,CAACC,UAAlD;AAHxB,CADmB,EAMnB;EACIL,IAAI,EAAE,UADV;EAEIC,WAAW,EAAE,CAACJ,SAAD,CAFjB;EAGIK,YAAY,EAAE,MAAM,OAAO,qCAAP,EAA8CC,IAA9C,CAAmDC,CAAC,IAAIA,CAAC,CAACE,cAA1D;AAHxB,CANmB,EAWnB;EACIN,IAAI,EAAE,IADV;EAEIC,WAAW,EAAE,CAACJ,SAAD,CAFjB;EAGIU,SAAS,EAAEZ;AAHf,CAXmB,EAgBnB;EAACK,IAAI,EAAE,KAAP;EAAcO,SAAS,EAAEX;AAAzB,CAhBmB,EAiBnB;EAACI,IAAI,EAAE,IAAP;EAAaQ,UAAU,EAAE;AAAzB,CAjBmB,CAAvB;AAwBA,WAAaC,gBAAb;EAAM,MAAOA,gBAAP,CAAuB;;;qBAAhBA;EAAgB;;;UAAhBA;;;cAHCf,YAAY,CAACgB,OAAb,CAAqBX,MAArB,GACAL;;EAEd,OAAae,gBAAb;AAAA",
       "names": [
         "RouterModule",
         "MeComponent",
@@ -3740,11 +3740,11 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/app-routing.module.ts"
       ],
       "sourcesContent": [
-        "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { MeComponent } from './components/me/me.component';\nimport { NotFoundComponent } from './components/not-found/not-found.component';\nimport { AuthGuard } from './guards/auth.guard';\nimport { UnauthGuard } from './guards/unauth.guard';\n\nconst routes: Routes = [\n  {\n    path: '',\n    canActivate: [UnauthGuard],\n    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)\n  },\n  {\n    path: 'sessions',\n    canActivate: [AuthGuard],\n    loadChildren: () => import('./features/sessions/sessions.module').then(m => m.SessionsModule)\n  },\n  {\n    path: 'me',\n    canActivate: [AuthGuard],\n    component: MeComponent\n  },\n  { path: '404', component: NotFoundComponent },\n  { path: '**', redirectTo: '404' }\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule]\n})\nexport class AppRoutingModule {\n}\n"
+        "import {NgModule} from '@angular/core';\nimport {RouterModule, Routes} from '@angular/router';\nimport {MeComponent} from './components/me/me.component';\nimport {NotFoundComponent} from './components/not-found/not-found.component';\nimport {AuthGuard} from './guards/auth.guard';\nimport {UnauthGuard} from './guards/unauth.guard';\n\nconst routes: Routes = [\n    {\n        path: '',\n        canActivate: [UnauthGuard],\n        loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)\n    },\n    {\n        path: 'sessions',\n        canActivate: [AuthGuard],\n        loadChildren: () => import('./features/sessions/sessions.module').then(m => m.SessionsModule)\n    },\n    {\n        path: 'me',\n        canActivate: [AuthGuard],\n        component: MeComponent\n    },\n    {path: '404', component: NotFoundComponent},\n    {path: '**', redirectTo: '404'}\n];\n\n@NgModule({\n    imports: [RouterModule.forRoot(routes)],\n    exports: [RouterModule]\n})\nexport class AppRoutingModule {\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "2b4f312b3e6e251a851089e7a0d2d29f6df35a81"
+    "hash": "3256c25a773b449415c7b2b978f9cd833b739869"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/services/auth.service.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/services/auth.service.ts",
@@ -4952,7 +4952,7 @@
       "12": 0,
       "13": 1,
       "14": 1,
-      "15": 45,
+      "15": 46,
       "16": 1,
       "17": 1,
       "18": 1,
@@ -4963,13 +4963,13 @@
       "23": 1,
       "24": 1,
       "25": 1,
-      "26": 54,
+      "26": 55,
       "27": 0,
       "28": 0,
       "29": 1,
       "30": 1,
       "31": 1,
-      "32": 55,
+      "32": 56,
       "33": 1,
       "34": 1,
       "35": 1,
@@ -4980,22 +4980,22 @@
       "40": 1,
       "41": 1,
       "42": 1,
-      "43": 55,
-      "44": 54,
-      "45": 54,
-      "46": 54,
+      "43": 56,
+      "44": 55,
+      "45": 55,
+      "46": 55,
       "47": 1
     },
     "f": {
       "0": 11,
       "1": 0,
-      "2": 45,
+      "2": 46,
       "3": 1,
       "4": 1,
-      "5": 54,
+      "5": 55,
       "6": 0,
       "7": 1,
-      "8": 55
+      "8": 56
     },
     "b": {
       "0": [
@@ -5004,7 +5004,7 @@
       ],
       "1": [
         1,
-        44
+        45
       ],
       "2": [
         1,
@@ -5012,16 +5012,16 @@
       ],
       "3": [
         1,
-        54
+        55
       ],
       "4": [
-        54,
+        55,
         1
       ]
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": ";;;;;;;;;;;;IAGIA,4BAAiD,CAAjD,EAAiD,MAAjD,EAAiD,CAAjD;IAC2CA;IAAQA;IACjDA;IAAmCA;IAAOA;IAC1CA;IAAMA;MAAAA;MAAA;MAAA,OAASA,+BAAT;IAAiB,CAAjB;IAAgCA;IAAMA;;;;;;IAG5CA,4BAAK,CAAL,EAAK,MAAL,EAAK,CAAL;IACwCA;IAAKA;IAC3CA;IAAyCA;IAAQA;;;;ACCzD,WAAaC,YAAb;EAAM,MAAOA,YAAP,CAAmB;IACvBC,YACUC,WADV,EAEUC,MAFV,EAGUC,cAHV,EAGwC;MAF9B;MACA;MACA;IACT;;IAEMC,SAAS;MACd,OAAO,KAAKD,cAAL,CAAoBC,SAApB,EAAP;IACD;;IAEMC,MAAM;MACX,KAAKF,cAAL,CAAoBG,MAApB;MACA,KAAKJ,MAAL,CAAYK,QAAZ,CAAqB,CAAC,EAAD,CAArB;IACD;;EAdsB;;;qBAAZR,cAAYD;EAAA;;;UAAZC;IAAYS;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QDZzBd,+BAAiB,CAAjB,EAAiB,aAAjB,EAAiB,CAAjB,EAAiB,CAAjB,EAAiB,MAAjB;QAEUA;QAAQA;QACdA;;QAKAA;QAMFA;QACAA;QACEA;QACFA;;;;;;QAdQA;QAAAA,6DAA2B,UAA3B,EAA2Be,GAA3B;;;;;;ECSV,OAAad,YAAb;AAAA",
+      "mappings": ";;;;;;;;;;;;IAGIA,4BAAiD,CAAjD,EAAiD,MAAjD,EAAiD,CAAjD;IAC2CA;IAAQA;IACjDA;IAA6DA;IAAOA;IACpEA;IAAMA;MAAAA;MAAA;MAAA,OAASA,+BAAT;IAAiB,CAAjB;IAAgCA;IAAMA;;;;;;IAG5CA,4BAAK,CAAL,EAAK,MAAL,EAAK,CAAL;IACwCA;IAAKA;IAC3CA;IAAyCA;IAAQA;;;;ACCzD,WAAaC,YAAb;EAAM,MAAOA,YAAP,CAAmB;IACrBC,YACYC,WADZ,EAEYC,MAFZ,EAGYC,cAHZ,EAG0C;MAF9B;MACA;MACA;IACX;;IAEMC,SAAS;MACZ,OAAO,KAAKD,cAAL,CAAoBC,SAApB,EAAP;IACH;;IAEMC,MAAM;MACT,KAAKF,cAAL,CAAoBG,MAApB;MACA,KAAKJ,MAAL,CAAYK,QAAZ,CAAqB,CAAC,EAAD,CAArB;IACH;;EAdoB;;;qBAAZR,cAAYD;EAAA;;;UAAZC;IAAYS;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QDZzBd,+BAAiB,CAAjB,EAAiB,aAAjB,EAAiB,CAAjB,EAAiB,CAAjB,EAAiB,MAAjB;QAEUA;QAAQA;QACdA;;QAKAA;QAMFA;QACAA;QACEA;QACFA;;;;;;QAdQA;QAAAA,6DAA2B,UAA3B,EAA2Be,GAA3B;;;;;;ECSV,OAAad,YAAb;AAAA",
       "names": [
         "i0",
         "AppComponent",
@@ -5046,12 +5046,12 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/app.component.ts"
       ],
       "sourcesContent": [
-        "<div class=\"app\">\n  <mat-toolbar color=\"primary\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\n    <span>Yoga app</span>\n    <div *ngIf=\"$isLogged() | async; else notLogged\">\n      <span routerLink=\"sessions\" class=\"link\">Sessions</span>\n      <span routerLink=\"me\" class=\"link\">Account</span>\n      <span (click)=\"logout()\" class=\"link\">Logout</span>\n    </div>\n    <ng-template #notLogged>\n      <div>\n        <span routerLink=\"login\" class=\"link\">Login</span>\n        <span routerLink=\"register\" class=\"link\">Register</span>\n      </div>\n    </ng-template>\n  </mat-toolbar>\n  <div>\n    <router-outlet></router-outlet>\n  </div>\n</div>\n",
-        "import { Component, OnInit } from '@angular/core';\nimport { Router } from '@angular/router';\nimport { Observable } from 'rxjs';\nimport { AuthService } from './features/auth/services/auth.service';\nimport { SessionInformation } from './interfaces/sessionInformation.interface';\nimport { SessionService } from './services/session.service';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  constructor(\n    private authService: AuthService,\n    private router: Router,\n    private sessionService: SessionService) {\n  }\n\n  public $isLogged(): Observable<boolean> {\n    return this.sessionService.$isLogged();\n  }\n\n  public logout(): void {\n    this.sessionService.logOut();\n    this.router.navigate([''])\n  }\n}\n"
+        "<div class=\"app\">\n  <mat-toolbar color=\"primary\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\n    <span>Yoga app</span>\n    <div *ngIf=\"$isLogged() | async; else notLogged\">\n      <span routerLink=\"sessions\" class=\"link\">Sessions</span>\n      <span routerLink=\"me\" data-test-id=\"me-account\" class=\"link\">Account</span>\n      <span (click)=\"logout()\" class=\"link\">Logout</span>\n    </div>\n    <ng-template #notLogged>\n      <div>\n        <span routerLink=\"login\" class=\"link\">Login</span>\n        <span routerLink=\"register\" class=\"link\">Register</span>\n      </div>\n    </ng-template>\n  </mat-toolbar>\n  <div>\n    <router-outlet></router-outlet>\n  </div>\n</div>\n",
+        "import {Component, OnInit} from '@angular/core';\nimport {Router} from '@angular/router';\nimport {Observable} from 'rxjs';\nimport {AuthService} from './features/auth/services/auth.service';\nimport {SessionInformation} from './interfaces/sessionInformation.interface';\nimport {SessionService} from './services/session.service';\n\n@Component({\n    selector: 'app-root',\n    templateUrl: './app.component.html',\n    styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n    constructor(\n        private authService: AuthService,\n        private router: Router,\n        private sessionService: SessionService) {\n    }\n\n    public $isLogged(): Observable<boolean> {\n        return this.sessionService.$isLogged();\n    }\n\n    public logout(): void {\n        this.sessionService.logOut();\n        this.router.navigate([''])\n    }\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "1f1e699ea552af9c1502e8dcae2f6d0fdb8e4833"
+    "hash": "906acc205378313bca14f717625fe81137128f52"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/interceptors/jwt.interceptor.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/interceptors/jwt.interceptor.ts",
@@ -5322,9 +5322,9 @@
     "s": {
       "0": 1,
       "1": 1,
-      "2": 2,
-      "3": 1,
-      "4": 2,
+      "2": 3,
+      "3": 2,
+      "4": 3,
       "5": 1,
       "6": 1,
       "7": 1,
@@ -5333,12 +5333,12 @@
     "f": {
       "0": 1,
       "1": 1,
-      "2": 2,
+      "2": 3,
       "3": 1
     },
     "b": {
       "0": [
-        1,
+        2,
         1
       ],
       "1": [
@@ -5563,7 +5563,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAASA,iBAAT,QAAkC,6BAAlC;AACA,SAASC,aAAT,QAA8B,2BAA9B;AAEA,SAASC,gBAAT,QAAiC,sBAAjC;AACA,SAASC,YAAT,QAA6B,iBAA7B;AACA,SAASC,uBAAT,QAAwC,sCAAxC;AAEA,SAASC,eAAT,QAAgC,0BAAhC;AACA,SAASC,aAAT,QAA8B,wBAA9B;AACA,SAASC,gBAAT,QAAiC,2BAAjC;AACA,SAASC,gBAAT,EAA2BC,iBAA3B,QAAoD,sBAApD;AACA,SAASC,cAAT,QAA+B,gCAA/B;AACA,SAASC,aAAT,QAA8B,wBAA9B;AACA,SAASC,gBAAT,QAAiC,sBAAjC;;AAGA,MAAMC,cAAc,GAAG,CACrBR,eADqB,EAErBM,aAFqB,EAGrBL,aAHqB,EAIrBN,iBAJqB,EAKrBO,gBALqB,CAAvB;AA2BA,WAAaO,SAAb;EAAM,MAAOA,SAAP,CAAgB;;;qBAATA;EAAS;;;UAATA;IAASC,YAFRZ,YAEQ;;;eALT,CACT;MAAEa,OAAO,EAAEP,iBAAX;MAA8BQ,QAAQ,EAAEP,cAAxC;MAAwDQ,KAAK,EAAE;IAA/D,CADS;IAEVC,UATClB,aASD,EARCC,gBAQD,EAPCE,uBAOD,EANCQ,gBAMD,EALCJ,gBAKD,EAJIK,cAIJ;;EAGH,OAAaC,SAAb;AAAA",
+      "mappings": "AACA,SAAQA,iBAAR,QAAgC,6BAAhC;AACA,SAAQC,aAAR,QAA4B,2BAA5B;AAEA,SAAQC,gBAAR,QAA+B,sBAA/B;AACA,SAAQC,YAAR,QAA2B,iBAA3B;AACA,SAAQC,uBAAR,QAAsC,sCAAtC;AAEA,SAAQC,eAAR,QAA8B,0BAA9B;AACA,SAAQC,aAAR,QAA4B,wBAA5B;AACA,SAAQC,gBAAR,QAA+B,2BAA/B;AACA,SAAQC,gBAAR,EAA0BC,iBAA1B,QAAkD,sBAAlD;AACA,SAAQC,cAAR,QAA6B,gCAA7B;AACA,SAAQC,aAAR,QAA4B,wBAA5B;AACA,SAAQC,gBAAR,QAA+B,sBAA/B;;AAGA,MAAMC,cAAc,GAAG,CACnBR,eADmB,EAEnBM,aAFmB,EAGnBL,aAHmB,EAInBN,iBAJmB,EAKnBO,gBALmB,CAAvB;AA2BA,WAAaO,SAAb;EAAM,MAAOA,SAAP,CAAgB;;;qBAATA;EAAS;;;UAATA;IAASC,YAFNZ,YAEM;;;eALP,CACP;MAACa,OAAO,EAAEP,iBAAV;MAA6BQ,QAAQ,EAAEP,cAAvC;MAAuDQ,KAAK,EAAE;IAA9D,CADO;IAEVC,UATGlB,aASH,EARGC,gBAQH,EAPGE,uBAOH,EANGQ,gBAMH,EALGJ,gBAKH,EAJMK,cAIN;;EAGL,OAAaC,SAAb;AAAA",
       "names": [
         "MatSnackBarModule",
         "BrowserModule",
@@ -5591,11 +5591,11 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/app.module.ts"
       ],
       "sourcesContent": [
-        "import { NgModule } from '@angular/core';\nimport { MatSnackBarModule } from '@angular/material/snack-bar';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { NotFoundComponent } from './components/not-found/not-found.component';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatToolbarModule } from '@angular/material/toolbar';\nimport { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';\nimport { JwtInterceptor } from './interceptors/jwt.interceptor';\nimport { MatCardModule } from '@angular/material/card';\nimport { FlexLayoutModule } from '@angular/flex-layout';\nimport { MeComponent } from './components/me/me.component';\n\nconst materialModule = [\n  MatButtonModule,\n  MatCardModule,\n  MatIconModule,\n  MatSnackBarModule,\n  MatToolbarModule,\n]\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    NotFoundComponent,\n    MeComponent,\n  ],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    BrowserAnimationsModule, \n    FlexLayoutModule,\n    HttpClientModule,\n    ...materialModule\n  ],\n  providers: [\n    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },\n  ],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n"
+        "import {NgModule} from '@angular/core';\nimport {MatSnackBarModule} from '@angular/material/snack-bar';\nimport {BrowserModule} from '@angular/platform-browser';\n\nimport {AppRoutingModule} from './app-routing.module';\nimport {AppComponent} from './app.component';\nimport {BrowserAnimationsModule} from '@angular/platform-browser/animations';\nimport {NotFoundComponent} from './components/not-found/not-found.component';\nimport {MatButtonModule} from '@angular/material/button';\nimport {MatIconModule} from '@angular/material/icon';\nimport {MatToolbarModule} from '@angular/material/toolbar';\nimport {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';\nimport {JwtInterceptor} from './interceptors/jwt.interceptor';\nimport {MatCardModule} from '@angular/material/card';\nimport {FlexLayoutModule} from '@angular/flex-layout';\nimport {MeComponent} from './components/me/me.component';\n\nconst materialModule = [\n    MatButtonModule,\n    MatCardModule,\n    MatIconModule,\n    MatSnackBarModule,\n    MatToolbarModule,\n]\n\n@NgModule({\n    declarations: [\n        AppComponent,\n        NotFoundComponent,\n        MeComponent,\n    ],\n    imports: [\n        BrowserModule,\n        AppRoutingModule,\n        BrowserAnimationsModule,\n        FlexLayoutModule,\n        HttpClientModule,\n        ...materialModule\n    ],\n    providers: [\n        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},\n    ],\n    bootstrap: [AppComponent]\n})\nexport class AppModule {\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "fe4179996e4c8de56ed364cac717af0ae64b019c"
+    "hash": "904fda02fc7e6a9003baca38cec902a88e8d8dd9"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/environments/environment.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/environments/environment.ts",
@@ -6841,7 +6841,7 @@
       "17": 1,
       "18": 1,
       "19": 1,
-      "20": 43,
+      "20": 44,
       "21": 1,
       "22": 1,
       "23": 1,
@@ -6864,19 +6864,19 @@
       "40": 1,
       "41": 1,
       "42": 1,
-      "43": 43,
-      "44": 42,
-      "45": 42,
-      "46": 42,
-      "47": 42,
-      "48": 42,
-      "49": 42,
-      "50": 42,
-      "51": 42,
-      "52": 42,
-      "53": 42,
-      "54": 42,
-      "55": 42,
+      "43": 44,
+      "44": 43,
+      "45": 43,
+      "46": 43,
+      "47": 43,
+      "48": 43,
+      "49": 43,
+      "50": 43,
+      "51": 43,
+      "52": 43,
+      "53": 43,
+      "54": 43,
+      "55": 43,
       "56": 1
     },
     "f": {
@@ -6887,7 +6887,7 @@
       "4": 1,
       "5": 0,
       "6": 1,
-      "7": 43,
+      "7": 44,
       "8": 1,
       "9": 2
     },
@@ -6902,24 +6902,24 @@
       ],
       "2": [
         1,
-        42
+        43
       ],
       "3": [
-        42,
+        43,
         1
       ],
       "4": [
-        40,
+        41,
         2
       ],
       "5": [
-        40,
+        41,
         2
       ]
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAAsBA,UAAtB,QAAwC,gBAAxC;;;;;;;;;;;;;;;;ICmBYC;IAAiCA;IAAiBA;;;;ADP9D,WAAaC,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAqBzBC,YAAoBC,WAApB,EACoBC,EADpB,EAEoBC,MAFpB,EAGoBC,cAHpB,EAGkD;MAH9B;MACA;MACA;MACA;MAvBb,YAAO,IAAP;MACA,eAAU,KAAV;MAEA,YAAO,KAAKF,EAAL,CAAQG,KAAR,CAAc;QAC1BC,KAAK,EAAE,CACL,EADK,EAEL,CACET,UAAU,CAACU,QADb,EAEEV,UAAU,CAACS,KAFb,CAFK,CADmB;QAQ1BE,QAAQ,EAAE,CACR,EADQ,EAER,CACEX,UAAU,CAACU,QADb,EAEEV,UAAU,CAACY,GAAX,CAAe,CAAf,CAFF,CAFQ;MARgB,CAAd,CAAP;IAqBN;;IAEMC,MAAM;MACX,MAAMC,YAAY,GAAG,KAAKC,IAAL,CAAUC,KAA/B;MACA,KAAKZ,WAAL,CAAiBa,KAAjB,CAAuBH,YAAvB,EAAqCI,SAArC,CAA+C;QAC7CC,IAAI,EAAGC,QAAD,IAAiC;UACrC,KAAKb,cAAL,CAAoBc,KAApB,CAA0BD,QAA1B;UACA,KAAKd,MAAL,CAAYgB,QAAZ,CAAqB,CAAC,WAAD,CAArB;QACD,CAJ4C;QAK7CC,KAAK,EAAEA,KAAK,IAAI,KAAKC,OAAL,GAAe;MALc,CAA/C;IAOD;;EApCwB;;;qBAAdtB,gBAAcD;EAAA;;;UAAdC;IAAcuB;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QCb3B5B,+BAAgE,CAAhE,EAAgE,UAAhE,EAAgE,CAAhE,EAAgE,iBAAhE,EAAgE,CAAhE,EAAgE,CAAhE,EAAgE,gBAAhE;QAG4BA;QAAKA;QAEzBA;QAA4CA;UAAA,OAAY6B,YAAZ;QAAoB,CAApB;QACxC7B,4CAAoC,CAApC,EAAoC,gBAApC,EAAoC,CAApC;QAEQA;QACJA;QACAA;QACIA;QAEAA;QAAkCA;UAAA;QAAA;QAE9BA;QAAUA;QAA0CA;QAIhEA;QAAkFA;QAAMA;QACxFA;QACJA;;;;QAhByBA;QAAAA;QAMGA;QAAAA;QAEyCA;QAAAA,8CAAmC,cAAnC,EAAmC6B,QAAnC;QAE3C7B;QAAAA;QAIkCA;QAAAA;QACpDA;QAAAA;;;;;;EDPhB,OAAaC,cAAb;AAAA",
+      "mappings": "AACA,SAAsBA,UAAtB,QAAwC,gBAAxC;;;;;;;;;;;;;;;;ICmBYC;IAAiCA;IAAiBA;;;;ADP9D,WAAaC,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAqBvBC,YAAoBC,WAApB,EACoBC,EADpB,EAEoBC,MAFpB,EAGoBC,cAHpB,EAGkD;MAH9B;MACA;MACA;MACA;MAvBb,YAAO,IAAP;MACA,eAAU,KAAV;MAEA,YAAO,KAAKF,EAAL,CAAQG,KAAR,CAAc;QACxBC,KAAK,EAAE,CACH,EADG,EAEH,CACIT,UAAU,CAACU,QADf,EAEIV,UAAU,CAACS,KAFf,CAFG,CADiB;QAQxBE,QAAQ,EAAE,CACN,EADM,EAEN,CACIX,UAAU,CAACU,QADf,EAEIV,UAAU,CAACY,GAAX,CAAe,CAAf,CAFJ,CAFM;MARc,CAAd,CAAP;IAqBN;;IAEMC,MAAM;MACT,MAAMC,YAAY,GAAG,KAAKC,IAAL,CAAUC,KAA/B;MACA,KAAKZ,WAAL,CAAiBa,KAAjB,CAAuBH,YAAvB,EAAqCI,SAArC,CAA+C;QAC3CC,IAAI,EAAGC,QAAD,IAAiC;UACnC,KAAKb,cAAL,CAAoBc,KAApB,CAA0BD,QAA1B;UACA,KAAKd,MAAL,CAAYgB,QAAZ,CAAqB,CAAC,WAAD,CAArB;QACH,CAJ0C;QAK3CC,KAAK,EAAEA,KAAK,IAAI,KAAKC,OAAL,GAAe;MALY,CAA/C;IAOH;;EApCsB;;;qBAAdtB,gBAAcD;EAAA;;;UAAdC;IAAcuB;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QCb3B5B,+BAAgE,CAAhE,EAAgE,UAAhE,EAAgE,CAAhE,EAAgE,iBAAhE,EAAgE,CAAhE,EAAgE,CAAhE,EAAgE,gBAAhE;QAG4BA;QAAKA;QAEzBA;QAA4CA;UAAA,OAAY6B,YAAZ;QAAoB,CAApB;QACxC7B,4CAAoC,CAApC,EAAoC,gBAApC,EAAoC,CAApC;QAEQA;QACJA;QACAA;QACIA;QAEAA;QAAkCA;UAAA;QAAA;QAE9BA;QAAUA;QAA0CA;QAIhEA;QAAkFA;QAAMA;QACxFA;QACJA;;;;QAhByBA;QAAAA;QAMGA;QAAAA;QAEyCA;QAAAA,8CAAmC,cAAnC,EAAmC6B,QAAnC;QAE3C7B;QAAAA;QAIkCA;QAAAA;QACpDA;QAAAA;;;;;;EDPhB,OAAaC,cAAb;AAAA",
       "names": [
         "Validators",
         "i0",
@@ -6959,12 +6959,12 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/components/login/login.component.html"
       ],
       "sourcesContent": [
-        "import { Component } from '@angular/core';\nimport { FormBuilder, Validators } from '@angular/forms';\nimport { Router } from '@angular/router';\nimport { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';\nimport { SessionService } from 'src/app/services/session.service';\nimport { LoginRequest } from '../../interfaces/loginRequest.interface';\nimport { AuthService } from '../../services/auth.service';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent {\n  public hide = true;\n  public onError = false;\n\n  public form = this.fb.group({\n    email: [\n      '',\n      [\n        Validators.required,\n        Validators.email\n      ]\n    ],\n    password: [\n      '',\n      [\n        Validators.required,\n        Validators.min(3)\n      ]\n    ]\n  });\n\n  constructor(private authService: AuthService,\n              private fb: FormBuilder,\n              private router: Router,\n              private sessionService: SessionService) {\n  }\n\n  public submit(): void {\n    const loginRequest = this.form.value as LoginRequest;\n    this.authService.login(loginRequest).subscribe({\n      next: (response: SessionInformation) => {\n        this.sessionService.logIn(response);\n        this.router.navigate(['/sessions']);\n      },\n      error: error => this.onError = true,\n    });\n  }\n}\n",
+        "import { Component } from '@angular/core';\nimport { FormBuilder, Validators } from '@angular/forms';\nimport { Router } from '@angular/router';\nimport { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';\nimport { SessionService } from 'src/app/services/session.service';\nimport { LoginRequest } from '../../interfaces/loginRequest.interface';\nimport { AuthService } from '../../services/auth.service';\n\n@Component({\n    selector: 'app-login',\n    templateUrl: './login.component.html',\n    styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent {\n    public hide = true;\n    public onError = false;\n\n    public form = this.fb.group({\n        email: [\n            '',\n            [\n                Validators.required,\n                Validators.email\n            ]\n        ],\n        password: [\n            '',\n            [\n                Validators.required,\n                Validators.min(3)\n            ]\n        ]\n    });\n\n    constructor(private authService: AuthService,\n                private fb: FormBuilder,\n                private router: Router,\n                private sessionService: SessionService) {\n    }\n\n    public submit(): void {\n        const loginRequest = this.form.value as LoginRequest;\n        this.authService.login(loginRequest).subscribe({\n            next: (response: SessionInformation) => {\n                this.sessionService.logIn(response);\n                this.router.navigate(['/sessions']);\n            },\n            error: error => this.onError = true,\n        });\n    }\n}\n",
         "<div class=\"login\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n    <mat-card>\n        <mat-card-header fxLayoutAlign=\"center center\">\n            <mat-card-title>Login</mat-card-title>\n        </mat-card-header>\n        <form class=\"login-form\" [formGroup]=\"form\" (ngSubmit)=\"submit()\">\n            <mat-card-content fxLayout=\"column\">\n                <mat-form-field fxFlex>\n                    <input matInput placeholder=\"Email\" formControlName=\"email\">\n                </mat-form-field>\n                <mat-form-field fxFlex>\n                    <input matInput [type]=\"hide ? 'password' : 'text'\" placeholder=\"Password\"\n                        formControlName=\"password\">\n                    <button mat-icon-button matSuffix (click)=\"hide = !hide\" [attr.aria-label]=\"'Hide password'\"\n                        [attr.aria-pressed]=\"hide\">\n                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>\n                    </button>\n                </mat-form-field>\n            </mat-card-content>\n            <button mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Submit</button>\n            <p *ngIf=\"onError\" class=\"error\">An error occurred</p>\n        </form>\n    </mat-card>\n</div>"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "7d36fe27c6c76c2797b16f792fe8ac3ca7458647"
+    "hash": "212242e341499486af0615b9b7593894dc3df256"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/components/register/register.component.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/components/register/register.component.ts",
@@ -7906,7 +7906,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAAsBA,UAAtB,QAAwC,gBAAxC;;;;;;;;;;;;;;ICoBYC;IAAwCA;IAAiBA;;;;ADVrE,WAAaC,iBAAb;EAAM,MAAOA,iBAAP,CAAwB;IAsC5BC,YAAoBC,WAApB,EACoBC,EADpB,EAEoBC,MAFpB,EAEkC;MAFd;MACA;MACA;MAtCb,eAAU,KAAV;MAEA,YAAO,KAAKD,EAAL,CAAQE,KAAR,CAAc;QAC1BC,KAAK,EAAE,CACL,EADK,EAEL,CACER,UAAU,CAACS,QADb,EAEET,UAAU,CAACQ,KAFb,CAFK,CADmB;QAQ1BE,SAAS,EAAE,CACT,EADS,EAET,CACEV,UAAU,CAACS,QADb,EAEET,UAAU,CAACW,GAAX,CAAe,CAAf,CAFF,EAGEX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHF,CAFS,CARe;QAgB1BC,QAAQ,EAAE,CACR,EADQ,EAER,CACEb,UAAU,CAACS,QADb,EAEET,UAAU,CAACW,GAAX,CAAe,CAAf,CAFF,EAGEX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHF,CAFQ,CAhBgB;QAwB1BE,QAAQ,EAAE,CACR,EADQ,EAER,CACEd,UAAU,CAACS,QADb,EAEET,UAAU,CAACW,GAAX,CAAe,CAAf,CAFF,EAGEX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHF,CAFQ;MAxBgB,CAAd,CAAP;IAqCN;;IAEMG,MAAM;MACX,MAAMC,eAAe,GAAG,KAAKC,IAAL,CAAUC,KAAlC;MACA,KAAKd,WAAL,CAAiBe,QAAjB,CAA0BH,eAA1B,EAA2CI,SAA3C,CAAqD;QACjDC,IAAI,EAAGC,CAAD,IAAa,KAAKhB,MAAL,CAAYiB,QAAZ,CAAqB,CAAC,QAAD,CAArB,CAD8B;QAEjDC,KAAK,EAAEF,CAAC,IAAI,KAAKG,OAAL,GAAe;MAFsB,CAArD;IAKD;;EAlD2B;;;qBAAjBvB,mBAAiBD;EAAA;;;UAAjBC;IAAiBwB;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QCX9B7B,+BAAmE,CAAnE,EAAmE,UAAnE,EAAmE,CAAnE,EAAmE,iBAAnE,EAAmE,CAAnE,EAAmE,CAAnE,EAAmE,gBAAnE;QAG4BA;QAAQA;QAE5BA;QAA+CA;UAAA,OAAY8B,YAAZ;QAAoB,CAApB;QAC3C9B,4CAAoC,CAApC,EAAoC,gBAApC,EAAoC,CAApC;QAEQA;QACJA;QACAA;QACIA;QACJA;QACAA;QACIA;QACJA;QACAA;QACIA;QACJA;QAEJA;QAAkFA;QAAMA;QACxFA;QACJA;;;;QAjB4BA;QAAAA;QAegCA;QAAAA;QACjDA;QAAAA;;;;;;EDVnB,OAAaC,iBAAb;AAAA",
+      "mappings": "AACA,SAAqBA,UAArB,QAAsC,gBAAtC;;;;;;;;;;;;;;ICoBYC;IAAwCA;IAAiBA;;;;ADVrE,WAAaC,iBAAb;EAAM,MAAOA,iBAAP,CAAwB;IAsC1BC,YAAoBC,WAApB,EACoBC,EADpB,EAEoBC,MAFpB,EAEkC;MAFd;MACA;MACA;MAtCb,eAAU,KAAV;MAEA,YAAO,KAAKD,EAAL,CAAQE,KAAR,CAAc;QACxBC,KAAK,EAAE,CACH,EADG,EAEH,CACIR,UAAU,CAACS,QADf,EAEIT,UAAU,CAACQ,KAFf,CAFG,CADiB;QAQxBE,SAAS,EAAE,CACP,EADO,EAEP,CACIV,UAAU,CAACS,QADf,EAEIT,UAAU,CAACW,GAAX,CAAe,CAAf,CAFJ,EAGIX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHJ,CAFO,CARa;QAgBxBC,QAAQ,EAAE,CACN,EADM,EAEN,CACIb,UAAU,CAACS,QADf,EAEIT,UAAU,CAACW,GAAX,CAAe,CAAf,CAFJ,EAGIX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHJ,CAFM,CAhBc;QAwBxBE,QAAQ,EAAE,CACN,EADM,EAEN,CACId,UAAU,CAACS,QADf,EAEIT,UAAU,CAACW,GAAX,CAAe,CAAf,CAFJ,EAGIX,UAAU,CAACY,GAAX,CAAe,EAAf,CAHJ,CAFM;MAxBc,CAAd,CAAP;IAqCN;;IAEMG,MAAM;MACT,MAAMC,eAAe,GAAG,KAAKC,IAAL,CAAUC,KAAlC;MACA,KAAKd,WAAL,CAAiBe,QAAjB,CAA0BH,eAA1B,EAA2CI,SAA3C,CAAqD;QAC7CC,IAAI,EAAGC,CAAD,IAAa,KAAKhB,MAAL,CAAYiB,QAAZ,CAAqB,CAAC,QAAD,CAArB,CAD0B;QAE7CC,KAAK,EAAEF,CAAC,IAAI,KAAKG,OAAL,GAAe;MAFkB,CAArD;IAKH;;EAlDyB;;;qBAAjBvB,mBAAiBD;EAAA;;;UAAjBC;IAAiBwB;IAAAC;IAAAC;IAAAC;IAAAC;MAAA;QCX9B7B,+BAAmE,CAAnE,EAAmE,UAAnE,EAAmE,CAAnE,EAAmE,iBAAnE,EAAmE,CAAnE,EAAmE,CAAnE,EAAmE,gBAAnE;QAG4BA;QAAQA;QAE5BA;QAA+CA;UAAA,OAAY8B,YAAZ;QAAoB,CAApB;QAC3C9B,4CAAoC,CAApC,EAAoC,gBAApC,EAAoC,CAApC;QAEQA;QACJA;QACAA;QACIA;QACJA;QACAA;QACIA;QACJA;QACAA;QACIA;QACJA;QAEJA;QAAkFA;QAAMA;QACxFA;QACJA;;;;QAjB4BA;QAAAA;QAegCA;QAAAA;QACjDA;QAAAA;;;;;;EDVnB,OAAaC,iBAAb;AAAA",
       "names": [
         "Validators",
         "i0",
@@ -7947,12 +7947,12 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/components/register/register.component.html"
       ],
       "sourcesContent": [
-        "import { Component } from '@angular/core';\nimport { FormBuilder, Validators } from '@angular/forms';\nimport { Router } from '@angular/router';\nimport { AuthService } from '../../services/auth.service';\nimport { RegisterRequest } from '../../interfaces/registerRequest.interface';\n\n@Component({\n  selector: 'app-register',\n  templateUrl: './register.component.html',\n  styleUrls: ['./register.component.scss']\n})\nexport class RegisterComponent {\n\n  public onError = false;\n\n  public form = this.fb.group({\n    email: [\n      '',\n      [\n        Validators.required,\n        Validators.email\n      ]\n    ],\n    firstName: [\n      '',\n      [\n        Validators.required,\n        Validators.min(3),\n        Validators.max(20)\n      ]\n    ],\n    lastName: [\n      '',\n      [\n        Validators.required,\n        Validators.min(3),\n        Validators.max(20)\n      ]\n    ],\n    password: [\n      '',\n      [\n        Validators.required,\n        Validators.min(3),\n        Validators.max(40)\n      ]\n    ]\n  });\n\n  constructor(private authService: AuthService,\n              private fb: FormBuilder,\n              private router: Router) {\n  }\n\n  public submit(): void {\n    const registerRequest = this.form.value as RegisterRequest;\n    this.authService.register(registerRequest).subscribe({\n        next: (_: void) => this.router.navigate(['/login']),\n        error: _ => this.onError = true,\n      }\n    );\n  }\n\n}\n",
+        "import {Component} from '@angular/core';\nimport {FormBuilder, Validators} from '@angular/forms';\nimport {Router} from '@angular/router';\nimport {AuthService} from '../../services/auth.service';\nimport {RegisterRequest} from '../../interfaces/registerRequest.interface';\n\n@Component({\n    selector: 'app-register',\n    templateUrl: './register.component.html',\n    styleUrls: ['./register.component.scss']\n})\nexport class RegisterComponent {\n\n    public onError = false;\n\n    public form = this.fb.group({\n        email: [\n            '',\n            [\n                Validators.required,\n                Validators.email\n            ]\n        ],\n        firstName: [\n            '',\n            [\n                Validators.required,\n                Validators.min(3),\n                Validators.max(20)\n            ]\n        ],\n        lastName: [\n            '',\n            [\n                Validators.required,\n                Validators.min(3),\n                Validators.max(20)\n            ]\n        ],\n        password: [\n            '',\n            [\n                Validators.required,\n                Validators.min(3),\n                Validators.max(40)\n            ]\n        ]\n    });\n\n    constructor(private authService: AuthService,\n                private fb: FormBuilder,\n                private router: Router) {\n    }\n\n    public submit(): void {\n        const registerRequest = this.form.value as RegisterRequest;\n        this.authService.register(registerRequest).subscribe({\n                next: (_: void) => this.router.navigate(['/login']),\n                error: _ => this.onError = true,\n            }\n        );\n    }\n\n}\n",
         "<div class=\"register\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n    <mat-card>\n        <mat-card-header fxLayoutAlign=\"center center\">\n            <mat-card-title>Register</mat-card-title>\n        </mat-card-header>\n        <form class=\"register-form\" [formGroup]=\"form\" (ngSubmit)=\"submit()\">\n            <mat-card-content fxLayout=\"column\">\n                <mat-form-field fxFlex>\n                    <input matInput placeholder=\"First name\" formControlName=\"firstName\">\n                </mat-form-field>\n                <mat-form-field fxFlex>\n                    <input matInput placeholder=\"Last name\" formControlName=\"lastName\">\n                </mat-form-field>\n                <mat-form-field fxFlex>\n                    <input matInput placeholder=\"Email\" formControlName=\"email\">\n                </mat-form-field>\n                <mat-form-field fxFlex>\n                    <input matInput placeholder=\"Password\" formControlName=\"password\">\n                </mat-form-field>\n            </mat-card-content>\n            <button mat-raised-button color=\"primary\" type=\"submit\" [disabled]=\"form.invalid\">Submit</button>\n            <span *ngIf=\"onError\" class=\"error ml2\">An error occurred</span>\n        </form>\n    </mat-card>\n</div>\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "fb4c09fd1ed834bafc2b88930321faa3ef43aaf5"
+    "hash": "bb537755b261723415f9e7b30c8030c7017daae4"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/auth-routing.module.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/features/auth/auth-routing.module.ts",
@@ -9143,7 +9143,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": ";;AAQA,WAAaA,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAIzBC,YAAoBC,UAApB,EAA0C;MAAtB;MAFZ,mBAAc,aAAd;IAEuC;;IAExCC,GAAG;MACR,OAAO,KAAKD,UAAL,CAAgBE,GAAhB,CAA+B,KAAKC,WAApC,CAAP;IACD;;IAEMC,MAAM,CAACC,EAAD,EAAW;MACtB,OAAO,KAAKL,UAAL,CAAgBE,GAAhB,CAA6B,GAAG,KAAKC,WAAW,IAAIE,EAAE,EAAtD,CAAP;IACD;;EAZwB;;;qBAAdP,gBAAcQ;EAAA;;;WAAdR;IAAcS,SAAdT,cAAc;IAAAU,YAFb;;EAEd,OAAaV,cAAb;AAAA",
+      "mappings": ";;AAQA,WAAaA,cAAb;EAAM,MAAOA,cAAP,CAAqB;IAIvBC,YAAoBC,UAApB,EAA0C;MAAtB;MAFZ,mBAAc,aAAd;IAGP;;IAEMC,GAAG;MACN,OAAO,KAAKD,UAAL,CAAgBE,GAAhB,CAA+B,KAAKC,WAApC,CAAP;IACH;;IAEMC,MAAM,CAACC,EAAD,EAAW;MACpB,OAAO,KAAKL,UAAL,CAAgBE,GAAhB,CAA6B,GAAG,KAAKC,WAAW,IAAIE,EAAE,EAAtD,CAAP;IACH;;EAbsB;;;qBAAdP,gBAAcQ;EAAA;;;WAAdR;IAAcS,SAAdT,cAAc;IAAAU,YAFX;;EAEhB,OAAaV,cAAb;AAAA",
       "names": [
         "TeacherService",
         "constructor",
@@ -9162,11 +9162,11 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/services/teacher.service.ts"
       ],
       "sourcesContent": [
-        "import { HttpClient } from '@angular/common/http';\nimport { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { Teacher } from '../interfaces/teacher.interface';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class TeacherService {\n\n  private pathService = 'api/teacher';\n\n  constructor(private httpClient: HttpClient) { }\n\n  public all(): Observable<Teacher[]> {\n    return this.httpClient.get<Teacher[]>(this.pathService);\n  }\n\n  public detail(id: string): Observable<Teacher> {\n    return this.httpClient.get<Teacher>(`${this.pathService}/${id}`);\n  }\n}\n"
+        "import {HttpClient} from '@angular/common/http';\nimport {Injectable} from '@angular/core';\nimport {Observable} from 'rxjs';\nimport {Teacher} from '../interfaces/teacher.interface';\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class TeacherService {\n\n    private pathService = 'api/teacher';\n\n    constructor(private httpClient: HttpClient) {\n    }\n\n    public all(): Observable<Teacher[]> {\n        return this.httpClient.get<Teacher[]>(this.pathService);\n    }\n\n    public detail(id: string): Observable<Teacher> {\n        return this.httpClient.get<Teacher>(`${this.pathService}/${id}`);\n    }\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "91dffb096c4033712d7a464d31aec7e0ba65e192"
+    "hash": "25d734506ea1ad06c1bfecea552246830d6a56af"
   },
   "/Users/wj/Documents/GitHub/savasana/front/src/app/features/sessions/components/detail/detail.component.ts": {
     "path": "/Users/wj/Documents/GitHub/savasana/front/src/app/features/sessions/components/detail/detail.component.ts",
@@ -15906,13 +15906,13 @@
       }
     },
     "s": {
-      "0": 9,
-      "1": 1,
-      "2": 1,
-      "3": 1,
-      "4": 1,
-      "5": 1,
-      "6": 1,
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
       "7": 1,
       "8": 0,
       "9": 0,
@@ -15926,51 +15926,51 @@
       "17": 0,
       "18": 0,
       "19": 1,
-      "20": 0,
-      "21": 0,
-      "22": 0,
-      "23": 0,
-      "24": 0,
-      "25": 0,
-      "26": 0,
-      "27": 0,
-      "28": 0,
-      "29": 0,
-      "30": 0,
-      "31": 0,
-      "32": 0,
-      "33": 0,
-      "34": 0,
-      "35": 0,
-      "36": 0,
-      "37": 0,
-      "38": 0,
-      "39": 0,
-      "40": 0,
-      "41": 0,
-      "42": 0,
-      "43": 0,
-      "44": 0,
-      "45": 0,
-      "46": 0,
-      "47": 0,
-      "48": 0,
-      "49": 0,
-      "50": 0,
-      "51": 0,
-      "52": 0,
-      "53": 0,
-      "54": 0,
-      "55": 0,
+      "20": 3,
+      "21": 9,
+      "22": 3,
+      "23": 3,
+      "24": 3,
+      "25": 3,
+      "26": 3,
+      "27": 3,
+      "28": 3,
+      "29": 3,
+      "30": 3,
+      "31": 3,
+      "32": 3,
+      "33": 3,
+      "34": 3,
+      "35": 3,
+      "36": 3,
+      "37": 3,
+      "38": 3,
+      "39": 3,
+      "40": 3,
+      "41": 3,
+      "42": 3,
+      "43": 9,
+      "44": 6,
+      "45": 6,
+      "46": 6,
+      "47": 6,
+      "48": 6,
+      "49": 6,
+      "50": 6,
+      "51": 6,
+      "52": 6,
+      "53": 6,
+      "54": 6,
+      "55": 6,
       "56": 1,
       "57": 1,
       "58": 1,
       "59": 1,
-      "60": 8,
+      "60": 10,
       "61": 1,
       "62": 1,
       "63": 1,
-      "64": 9,
+      "64": 5,
       "65": 1,
       "66": 1,
       "67": 1,
@@ -15980,29 +15980,29 @@
       "71": 1,
       "72": 1,
       "73": 1,
-      "74": 9,
-      "75": 8,
-      "76": 8,
-      "77": 8,
-      "78": 8,
+      "74": 5,
+      "75": 4,
+      "76": 4,
+      "77": 4,
+      "78": 4,
       "79": 1
     },
     "f": {
-      "0": 9,
+      "0": 0,
       "1": 0,
       "2": 0,
-      "3": 0,
-      "4": 0,
+      "3": 3,
+      "4": 9,
       "5": 1,
       "6": 1,
-      "7": 8,
+      "7": 10,
       "8": 1,
-      "9": 9
+      "9": 5
     },
     "b": {
       "0": [
-        1,
-        8
+        0,
+        0
       ],
       "1": [
         0,
@@ -16013,12 +16013,12 @@
         0
       ],
       "3": [
-        0,
-        0
+        3,
+        6
       ],
       "4": [
-        0,
-        0
+        6,
+        3
       ],
       "5": [
         1,
@@ -16026,10 +16026,10 @@
       ],
       "6": [
         1,
-        8
+        4
       ],
       "7": [
-        8,
+        4,
         1
       ]
     },
@@ -16465,7 +16465,7 @@
     },
     "inputSourceMap": {
       "version": 3,
-      "mappings": "AACA,SAASA,YAAT,EAAuBC,kBAAvB,QAAiD,iBAAjD;AACA,SAASC,gBAAT,QAAiC,sBAAjC;AACA,SAASC,mBAAT,QAAoC,gBAApC;AACA,SAASC,eAAT,QAAgC,0BAAhC;AACA,SAASC,aAAT,QAA8B,wBAA9B;AACA,SAASC,kBAAT,QAAmC,8BAAnC;AACA,SAASC,aAAT,QAA8B,wBAA9B;AACA,SAASC,cAAT,QAA+B,yBAA/B;AACA,SAASC,eAAT,QAAgC,0BAAhC;AACA,SAASC,iBAAT,QAAkC,6BAAlC;AAIA,SAASC,qBAAT,QAAsC,2BAAtC;AACA,OAAOC,QAAP,MAAqB,4BAArB;;AACAX,kBAAkB,CAACW,QAAD,CAAlB;AAEA,MAAMC,eAAe,GAAG,CACtBT,eADsB,EAEtBC,aAFsB,EAGtBC,kBAHsB,EAItBC,aAJsB,EAKtBC,cALsB,EAMtBE,iBANsB,EAOtBD,eAPsB,CAAxB;AAwBA,WAAaK,cAAb;EAAM,MAAOA,cAAP,CAAqB;;;qBAAdA;EAAc;;;UAAdA;;;cAPTd,cACAE,kBACAC,qBACAQ,uBACGE;;EAGP,OAAaC,cAAb;AAAA",
+      "mappings": "AACA,SAAQA,YAAR,EAAsBC,kBAAtB,QAA+C,iBAA/C;AACA,SAAQC,gBAAR,QAA+B,sBAA/B;AACA,SAAQC,mBAAR,QAAkC,gBAAlC;AACA,SAAQC,eAAR,QAA8B,0BAA9B;AACA,SAAQC,aAAR,QAA4B,wBAA5B;AACA,SAAQC,kBAAR,QAAiC,8BAAjC;AACA,SAAQC,aAAR,QAA4B,wBAA5B;AACA,SAAQC,cAAR,QAA6B,yBAA7B;AACA,SAAQC,eAAR,QAA8B,0BAA9B;AACA,SAAQC,iBAAR,QAAgC,6BAAhC;AAIA,SAAQC,qBAAR,QAAoC,2BAApC;AACA,OAAOC,QAAP,MAAqB,4BAArB;;AAEAX,kBAAkB,CAACW,QAAD,CAAlB;AAEA,MAAMC,eAAe,GAAG,CACpBT,eADoB,EAEpBC,aAFoB,EAGpBC,kBAHoB,EAIpBC,aAJoB,EAKpBC,cALoB,EAMpBE,iBANoB,EAOpBD,eAPoB,CAAxB;AAwBA,WAAaK,cAAb;EAAM,MAAOA,cAAP,CAAqB;;;qBAAdA;EAAc;;;UAAdA;;;cAPLd,cACAE,kBACAC,qBACAQ,uBACGE;;EAGX,OAAaC,cAAb;AAAA",
       "names": [
         "CommonModule",
         "registerLocaleData",
@@ -16488,10 +16488,10 @@
         "/Users/wj/Documents/GitHub/savasana/front/src/app/features/sessions/sessions.module.ts"
       ],
       "sourcesContent": [
-        "import { NgModule } from '@angular/core';\nimport { CommonModule, registerLocaleData } from '@angular/common';\nimport { FlexLayoutModule } from '@angular/flex-layout';\nimport { ReactiveFormsModule } from '@angular/forms';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatCardModule } from '@angular/material/card';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatSelectModule } from '@angular/material/select';\nimport { MatSnackBarModule } from '@angular/material/snack-bar';\nimport { ListComponent } from './components/list/list.component';\nimport { FormComponent } from './components/form/form.component';\nimport { DetailComponent } from './components/detail/detail.component';\nimport { SessionsRoutingModule } from './sessions-routing.module';\nimport localeFr from '@angular/common/locales/fr';\nregisterLocaleData(localeFr);\n\nconst materialModules = [\n  MatButtonModule,\n  MatCardModule,\n  MatFormFieldModule,\n  MatIconModule,\n  MatInputModule,\n  MatSnackBarModule,\n  MatSelectModule\n];\n\n@NgModule({\n  declarations: [\n    ListComponent,\n    FormComponent,\n    DetailComponent\n  ],\n  imports: [\n    CommonModule,\n    FlexLayoutModule,\n    ReactiveFormsModule,\n    SessionsRoutingModule,\n    ...materialModules\n  ]\n})\nexport class SessionsModule { }\n"
+        "import {NgModule} from '@angular/core';\nimport {CommonModule, registerLocaleData} from '@angular/common';\nimport {FlexLayoutModule} from '@angular/flex-layout';\nimport {ReactiveFormsModule} from '@angular/forms';\nimport {MatButtonModule} from '@angular/material/button';\nimport {MatCardModule} from '@angular/material/card';\nimport {MatFormFieldModule} from '@angular/material/form-field';\nimport {MatIconModule} from '@angular/material/icon';\nimport {MatInputModule} from '@angular/material/input';\nimport {MatSelectModule} from '@angular/material/select';\nimport {MatSnackBarModule} from '@angular/material/snack-bar';\nimport {ListComponent} from './components/list/list.component';\nimport {FormComponent} from './components/form/form.component';\nimport {DetailComponent} from './components/detail/detail.component';\nimport {SessionsRoutingModule} from './sessions-routing.module';\nimport localeFr from '@angular/common/locales/fr';\n\nregisterLocaleData(localeFr);\n\nconst materialModules = [\n    MatButtonModule,\n    MatCardModule,\n    MatFormFieldModule,\n    MatIconModule,\n    MatInputModule,\n    MatSnackBarModule,\n    MatSelectModule\n];\n\n@NgModule({\n    declarations: [\n        ListComponent,\n        FormComponent,\n        DetailComponent\n    ],\n    imports: [\n        CommonModule,\n        FlexLayoutModule,\n        ReactiveFormsModule,\n        SessionsRoutingModule,\n        ...materialModules\n    ]\n})\nexport class SessionsModule {\n}\n"
       ]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "9f4a7b0b34b41c1fe70826aa88b8e33e68dd1ead"
+    "hash": "850c65f3fecc2889432e891a7bbb1ff9fa3a8f17"
   }
 }
