@@ -83,6 +83,7 @@ describe('Component: DetailComponent', () => {
         component = fixture.componentInstance;
         component.session = session;
         component.teacher = teacher;
+        // component.userId = String(service.sessionInformation!.id);
         component.sessionId = String(session.id);
         ngZone = TestBed.inject(NgZone);
         debugElement = fixture.debugElement;
@@ -173,21 +174,15 @@ describe('Component: DetailComponent', () => {
         const spyParticipate = jest.spyOn(serviceApi, 'participate').mockReturnValue(of(void {}));
         const fetchSessionSpy = jest.spyOn(component as any, 'fetchSession').mockImplementation(() => {
             component.session = session;
-            return of(session); // Mock the fetchSession return value
+            return of(session);
         });
 
-        ngZone.run(() => {
-            component.participate();
-        });
+        component.participate();
 
         expect(spyParticipate).toHaveBeenCalledWith(component.sessionId, component.userId);
         expect(fetchSessionSpy).toHaveBeenCalled();
+        expect(fetchSessionSpy).toReturn();
         expect(component.session?.name).toBe('Test Name');
-
-        // Mock the GET request made by fetchSession
-        const req = httpMock.expectOne(`api/session/${session.id}`);
-        expect(req.request.method).toBe('GET');
-        req.flush(session); // Provide a mock response
     });
 
     it('should unParticipate successfully', () => {
@@ -197,9 +192,7 @@ describe('Component: DetailComponent', () => {
             return of(session); // Mock the fetchSession return value
         });
 
-        ngZone.run(() => {
-            component.unParticipate();
-        });
+        component.unParticipate();
 
         expect(spyUnParticipate).toHaveBeenCalledWith(component.sessionId, component.userId);
         expect(fetchSessionSpy).toHaveBeenCalled();
