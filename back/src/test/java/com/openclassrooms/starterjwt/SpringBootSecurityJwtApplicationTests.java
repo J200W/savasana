@@ -1,5 +1,6 @@
 package com.openclassrooms.starterjwt;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -8,6 +9,7 @@ public class SpringBootSecurityJwtApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		assertTrue(true);
 	}
 
 }
