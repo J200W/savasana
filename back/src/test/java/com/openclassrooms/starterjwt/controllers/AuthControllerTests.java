@@ -130,8 +130,8 @@ public class AuthControllerTests {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setEmail("yoga@studio.com");
         signupRequest.setPassword("test!1234");
-        signupRequest.setFirstName("");
-        signupRequest.setLastName("");
+        signupRequest.setFirstName("Already");
+        signupRequest.setLastName("Exists");
 
         // Mock the password encoding process
         when(passwordEncoder.encode(any(String.class))).thenReturn("encodedPassword");
@@ -144,6 +144,7 @@ public class AuthControllerTests {
                         .contentType("application/json")
                         .content(new ObjectMapper().writeValueAsString(signupRequest)))
                 .andExpect(status().isBadRequest())
+                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Error: Error: Email is already taken!"))
                 .andReturn();
     }
 }
