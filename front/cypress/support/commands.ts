@@ -1,43 +1,49 @@
-// ***********************************************
-// This example namespace declaration will help
-// with Intellisense and code completion in your
-// IDE or Text Editor.
-// ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
-//
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
-//
-// NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
-//
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('login', ({ admin = false } = {}) => {
+    cy.visit('/login');
+
+    // Intercept session and login requests
+    cy.intercept('GET', '/api/session', { fixture: 'sessions-list.res' }).as('getLogin');
+    let email = "yoga@studio.com"
+
+    if (admin) {
+        cy.intercept('POST', '/api/auth/login', { fixture: 'login-admin.res' });
+    }
+    else {
+        cy.intercept('POST', '/api/auth/login', { fixture: 'login-user.res' });
+        email = "yoga-user@studio.com"
+    }
+
+    // Fill in login form and submit
+    cy.get('input[formControlName=email]').type(email);
+    cy.get('input[formControlName=password]').type('test!1234{enter}{enter}');
+
+    // Wait for login process to complete
+    cy.wait('@getLogin');
+
+    cy.request('POST', 'http://localhost:8080/api/auth/login', {
+        email: "yoga@studio.com",
+        password: "test!1234"
+    })
+});
+
+Cypress.Commands.add('fillRegistrationForm', ({ firstName, lastName, email, password }) => {
+    cy.get('input[formControlName=firstName]').type(firstName);
+    cy.get('input[formControlName=lastName]').type(lastName);
+    cy.get('input[formControlName=email]').type(email);
+    cy.get('input[formControlName=password]').type(`${password}{enter}`);
+});
+
+Cypress.Commands.add('showSessionDetails', ({ participate = false } = {}) => {
+    if (participate) {
+        cy.intercept('GET', '/api/session/*', { fixture: 'session-participated.res' }).as('getSession');
+    }
+    else {
+        cy.intercept('GET', '/api/session/*', { fixture: 'session.res' }).as('getSession');
+    }
+
+    cy.intercept('GET', /\/api\/teacher\/\d+/, { fixture: 'teacher.res' }).as('getTeacher');
+    cy.login();
+    cy.contains('mat-card-actions button', 'Detail').should('be.visible').click();
+    cy.wait('@getSession');
+    cy.wait('@getTeacher');
+});

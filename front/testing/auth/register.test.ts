@@ -1,8 +1,8 @@
 /**
- * Testing for register page
+ * Test pour le composant RegisterComponent
  */
 
-import {RegisterComponent} from "../src/app/features/auth/components/register/register.component";
+import {RegisterComponent} from "../../src/app/features/auth/components/register/register.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {expect} from '@jest/globals';
 import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
@@ -12,20 +12,29 @@ import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
+import {AuthService} from "../../src/app/features/auth/services/auth.service";
+import {of, throwError} from "rxjs";
 import {Router} from "@angular/router";
-import {AuthService} from "../src/app/features/auth/services/auth.service";
-import {throwError} from "rxjs";
+import {NgZone} from "@angular/core";
+import {RouterTestingModule} from "@angular/router/testing";
+import {LoginComponent} from "../../src/app/features/auth/components/login/login.component";
 
 describe('Component: RegisterComponent', () => {
     let component: RegisterComponent;
     let fixture: ComponentFixture<RegisterComponent>;
-    let router: Router;
     let authService: AuthService;
+    let spySubmit: jest.SpyInstance;
+    let router: Router;
+    let spyRouter: jest.SpyInstance;
+    let ngZone: NgZone;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [RegisterComponent],
             imports: [
+                RouterTestingModule.withRoutes([
+                    {path: "login", component: LoginComponent}
+                ]),
                 BrowserAnimationsModule,
                 HttpClientModule,
                 ReactiveFormsModule,
@@ -39,15 +48,17 @@ describe('Component: RegisterComponent', () => {
 
         fixture = TestBed.createComponent(RegisterComponent);
         component = fixture.componentInstance;
-        router = TestBed.inject(Router);
         authService = TestBed.inject(AuthService);
+        router = TestBed.inject(Router);
+        ngZone = TestBed.inject(NgZone);
+        spySubmit = jest.spyOn(component, 'submit');
+        spyRouter = jest.spyOn(router, 'navigate');
         fixture.detectChanges();
     });
 
     it('should be able to submit the form', () => {
-        const spy = jest.spyOn(component, 'submit');
         component.submit();
-        expect(spy).toHaveBeenCalled();
+        expect(spySubmit).toHaveBeenCalled();
     });
 
     it('should submit successfully', () => {
@@ -60,17 +71,22 @@ describe('Component: RegisterComponent', () => {
             lastName: 'Test'
         };
 
-        const spy = jest.spyOn(component, 'submit');
-        const spyNavigate = jest.spyOn(router, 'navigate');
-
         component.form.setValue(registerRequest);
-        component.submit();
 
-        expect(spy).toHaveBeenCalled();
+        const spyRegister =
+            jest.spyOn(authService, 'register').mockReturnValue(of(void {}));
+
+        ngZone.run(() => {
+            component.submit();
+        });
+
+        expect(spySubmit).toHaveBeenCalled();
+        expect(spyRegister).toHaveBeenCalled();
         expect(component.onError).toBe(false);
+        expect(spyRouter).toHaveBeenCalled();
     });
 
-    it('should submit with error', () => {
+    it('shouldn\'t submit with an error', () => {
         const registerRequest = {
             email: 'nimportequoi@gmail.com',
             password: '',
