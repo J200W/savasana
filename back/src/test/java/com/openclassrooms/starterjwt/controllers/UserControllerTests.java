@@ -127,4 +127,10 @@ public class UserControllerTests {
         this.mockMvc.perform(delete("/api/user/abc"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void testNotFoundException() throws Exception {
+        this.mockMvc.perform(get("/api/user/100"))
+                .andExpect(status().isNotFound());
+    }
 }

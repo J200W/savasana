@@ -1,6 +1,7 @@
 package com.openclassrooms.starterjwt.services;
 
 import com.openclassrooms.starterjwt.exception.BadRequestException;
+import com.openclassrooms.starterjwt.exception.NotFoundException;
 import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.models.User;
@@ -88,6 +89,17 @@ public class SessionServiceTests {
 
         sessionService.participate(session.getId(), user.getId());
         verify(sessionRepository, times(1)).save(session);
+    }
+
+    @Test
+    public void testParticpate404() {
+        when(sessionRepository.findById(session.getId())).thenReturn(Optional.empty());
+
+        when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            sessionService.participate(session.getId(), user.getId());
+        });
     }
 
     @Test
