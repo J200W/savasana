@@ -30,11 +30,18 @@ Cloner le projet:
 
 > mvn install
 
-3 - Configurer le fichier .env:
+3 - Créer et configurer le fichier .env:
 
 > savasana/back/src/main/resources/.env
 
 Remplacer les valeurs par les vôtres.
+
+```
+MYSQL_USER=
+MYSQL_PASSWORD=
+JWT_SECRET=
+JWT_EXPIRATION_MS=
+```
  
 4 - Lancer le back-end:
 
