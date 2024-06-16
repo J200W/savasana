@@ -3,7 +3,6 @@ package com.openclassrooms.starterjwt.security.jwt;
 import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,34 +17,61 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test de la classe JwtUtils
+
+ */
 @SpringBootTest
 public class JwtUtilsTests {
 
+    /**
+     * Mocker l'objet Logger
+     */
     @Mock
     private Logger logger;
 
+    /**
+     * Mocker l'objet UserDetailsImpl
+     */
     @Mock
     private UserDetailsImpl userPrincipal;
 
+    /**
+     * Mocker l'objet Authentication
+     */
     @Mock
     private Authentication authentication;
 
+    /**
+     * Injection des dépendances pour JwtUtils
+     */
     @InjectMocks
     private JwtUtils jwtUtils;
 
+    /**
+     * Récupérer les valeurs de jwtSecret et jwtExpirationMs depuis le fichier application.properties
+     */
     @Value("${oc.app.jwtSecret}")
     private String jwtSecret;
 
+    /**
+     * Récupérer les valeurs de jwtSecret et jwtExpirationMs depuis le fichier application.properties
+     */
     @Value("${oc.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
+    /**
+     * Définir une valeur pour le nom d'utilisateur
+     */
     private final String username = "user@gmail.com";
 
+    /**
+     * Mocker les méthodes avant chaque test
+     */
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         MockitoAnnotations.openMocks(this);
 
         // Set values for jwtSecret and jwtExpirationMs
@@ -58,12 +84,18 @@ public class JwtUtilsTests {
 
     }
 
+    /**
+     * Test de la méthode generateJwtToken
+     */
     @Test
     public void testGenerateJwtToken() {
         jwtUtils.generateJwtToken(authentication);
         verify(authentication, times(1)).getPrincipal();
     }
 
+    /**
+     * Test de la méthode getUserNameFromJwtToken
+     */
     @Test
     public void testGetUserNameFromJwtToken() {
         String token = Jwts.builder()
@@ -77,6 +109,9 @@ public class JwtUtilsTests {
         assertEquals(username, extractedUsername);
     }
 
+    /**
+     * Test de la méthode getUserNameFromJwtToken avec un token invalide
+     */
     @Test
     public void testValidateJwtToken() {
         String authToken = Jwts.builder()
@@ -91,6 +126,9 @@ public class JwtUtilsTests {
         verify(logger, times(0)).error(anyString());
     }
 
+    /**
+     * Test de la méthode getUserNameFromJwtToken avec un token invalide
+     */
     @Test
     public void testValidateJwtTokenInvalidSignature() {
         String authToken = Jwts.builder()
@@ -103,6 +141,9 @@ public class JwtUtilsTests {
         jwtUtils.validateJwtToken(authToken);
     }
 
+    /**
+     * Test de la méthode getUserNameFromJwtToken avec un token invalide
+     */
     @Test
     public void testValidateJwtTokenInvalidToken() {
         String authToken =
@@ -110,6 +151,9 @@ public class JwtUtilsTests {
         jwtUtils.validateJwtToken(authToken);
     }
 
+    /**
+     * Test de la méthode getUserNameFromJwtToken avec un token invalide
+     */
     @Test
     public void testValidateJwtTokenExpired() {
         String authToken = Jwts.builder()
