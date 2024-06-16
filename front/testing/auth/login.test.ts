@@ -1,7 +1,3 @@
-/**
- * Test pour le composant LoginComponent
- */
-
 import {LoginComponent} from "../../src/app/features/auth/components/login/login.component";
 import {SessionService} from "../../src/app/services/session.service";
 import {expect} from '@jest/globals';
@@ -20,7 +16,9 @@ import {ListComponent} from "../../src/app/features/sessions/components/list/lis
 import {of, throwError} from "rxjs";
 import {NgZone} from "@angular/core";
 
-
+/**
+ * Test du composant LoginComponent
+ */
 describe('Component: LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
@@ -30,6 +28,7 @@ describe('Component: LoginComponent', () => {
     let spySubmit: jest.SpyInstance;
     let ngZone: NgZone;
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [LoginComponent],
@@ -48,6 +47,8 @@ describe('Component: LoginComponent', () => {
             ]
         })
             .compileComponents();
+
+        // On récupère les services et on les initialise
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         authService = TestBed.inject(AuthService);
@@ -58,15 +59,18 @@ describe('Component: LoginComponent', () => {
         fixture.detectChanges();
     });
 
+    // Après chaque test on supprime le token
     afterEach(() => {
         localStorage.removeItem('token');
     });
 
+    // Test de la possibilité de soumettre le formulaire
     it('should be able to submit the form', () => {
         component.submit();
         expect(spySubmit).toHaveBeenCalled();
     });
 
+    // Test de la soumission du formulaire avec succès
     it('should submit successfully', () => {
         const loginRequest = {
             email: 'yoga@studio.com',
@@ -98,6 +102,7 @@ describe('Component: LoginComponent', () => {
         expect(spyRouter).toHaveBeenCalledWith(['/sessions']);
     });
 
+    // Test de la soumission du formulaire avec une erreur
     it('shouldn\'t submit with an error', () => {
         const loginRequest = {
             email: 'nimportequoi@gmail.com',

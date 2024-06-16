@@ -1,3 +1,7 @@
+/**
+ * Ce fichier permet de lancer tous les tests d'interface
+ * @returns {void}
+ */
 import loginSpec from "./specs/login.spec";
 import registerSpec from "./specs/register.spec";
 import sessionsSpec from "./specs/sessions.spec";

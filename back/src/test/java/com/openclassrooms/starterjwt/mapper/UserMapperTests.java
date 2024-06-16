@@ -12,16 +12,34 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Les tests de la classe UserMapper.
+ */
 public class UserMapperTests {
 
+    /**
+     * Initialisation UserMapper.
+     */
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
+    /**
+     * Initialisation userDto.
+     */
     private static UserDto userDto;
+
+    /**
+     * Initialisation userDto2.
+     */
     private static UserDto userDto2;
 
+    /**
+     * Initialisation user.
+     */
     private static User user;
 
+    /**
+     * Initialisation de userDto et userDto2 avant tout les tests.
+     */
     @BeforeAll
     static void beforeAll() {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -29,6 +47,9 @@ public class UserMapperTests {
         userDto2 = new UserDto(2L, "test2@example.com", "Jane", "Doe", false, "test2!1234", localDateTime, localDateTime);
     }
 
+    /**
+     * Test de la méthode toEntity de UserMapper.
+     */
     @Test
     public void testToEntity() {
         user = userMapper.toEntity(userDto);
@@ -42,6 +63,9 @@ public class UserMapperTests {
         assertEquals(userDto.isAdmin(), user.isAdmin());
     }
 
+    /**
+     * Test de la méthode toDto de UserMapper.
+     */
     @Test
     public void testToDto() {
         userDto = userMapper.toDto(user);
@@ -55,6 +79,9 @@ public class UserMapperTests {
         assertEquals(user.isAdmin(), userDto.isAdmin());
     }
 
+    /**
+     * Test de la méthode listToEntity de UserMapper.
+     */
     @Test
     public void testListToEntity() {
         List<UserDto> userDtoList = Arrays.asList(userDto, userDto2);
@@ -64,6 +91,9 @@ public class UserMapperTests {
         assertEquals(2, userList.size());
     }
 
+    /**
+     * Test de la méthode listToDto de UserMapper.
+     */
     @Test
     public void testListToDto() {
         User user2 = userMapper.toEntity(userDto2);

@@ -1,7 +1,13 @@
-
+/**
+ * Suite de tests pour la page de détail de session
+ * @description Vérifie que l'utilisateur peut voir les détails de la session,
+ * que l'utilisateur peut participer à la session et que l'utilisateur peut ne pas participer à la session
+ * @returns {void}
+ */
 export default function sessionDetailSpec() {
     describe("Session Detail spec", () => {
 
+        // Test de redirection vers la page de détail de session
         it("Display session detail successfully", () => {
             cy.showSessionDetails();
             cy.url().should('include', '/session');
@@ -14,13 +20,14 @@ export default function sessionDetailSpec() {
             cy.get('.my2 > div > .ml1').should('contain.text', 'June 10, 2024');
         });
 
+        // Test de l'affichage des informations de l'enseignant
         it("Display teacher detail successfully", () => {
             cy.showSessionDetails();
             cy.get('.ml3').should('contain.text', 'Firstname LASTNAME');
         });
 
+        // Test de participation à la session
         it("Participate successfully", () => {
-            // Intercept the participate network request
             cy.intercept('POST', '**/participate/**', {
                 statusCode: 200,
                 body: {
@@ -28,18 +35,15 @@ export default function sessionDetailSpec() {
                 },
             }).as('postParticipate');
 
-            // Show session details
             cy.showSessionDetails();
 
-            // Ensure the participate button is present and click it
             cy.get('button[color="primary"]').should('contain.text', 'Participate').click();
 
-            // Wait for the intercepted request to complete
             cy.wait('@postParticipate').its('response.statusCode').should('eq', 200);
         });
 
+        // Test de non-participation à la session
         it("Unparticipate successfully", () => {
-            // Intercept the participate network request
             cy.intercept('DELETE', '**/participate/**', {
                 statusCode: 200,
                 body: {
@@ -47,13 +51,10 @@ export default function sessionDetailSpec() {
                 },
             }).as('deleteParticipate');
 
-            // Show session details
             cy.showSessionDetails({ participate: true });
 
-            // Ensure the participate button is present and click it
             cy.get('button[color="warn"]').should('contain.text', 'Do not participate').click();
 
-            // Wait for the intercepted request to complete
             cy.wait('@deleteParticipate').its('response.statusCode').should('eq', 200);
         });
     });

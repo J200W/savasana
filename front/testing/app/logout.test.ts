@@ -9,12 +9,18 @@ import {Router} from "@angular/router";
 import {NgZone} from "@angular/core";
 import {of} from "rxjs";
 
+/**
+ * Test du composant AppComponent - la méthode logout
+ */
 describe('Component: AppComponent', () => {
+
+    // Déclaration des variables
     let sessionService: SessionService;
     let router: Router;
     let spyRouter: jest.SpyInstance;
     let ngZone: NgZone;
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
@@ -42,6 +48,7 @@ describe('Component: AppComponent', () => {
         spyRouter = jest.spyOn(router, 'navigate');
     });
 
+    // Test du logout
     it('should logout successfully', () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.componentInstance;

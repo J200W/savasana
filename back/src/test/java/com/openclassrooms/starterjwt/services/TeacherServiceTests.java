@@ -11,21 +11,36 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+/**
+ * Les tests de TeacherService.
+ */
 @ExtendWith(MockitoExtension.class)
 public class TeacherServiceTests {
 
+    /**
+     * Mocker le repository de teacher.
+     */
     @Mock
     private TeacherRepository teacherRepository;
 
+    /**
+     * Injection des dépendances dans le service de teacher.
+     */
     @InjectMocks
     private TeacherService teacherService;
 
+    /**
+     * Test de la méthode findAll de TeacherService.
+     */
     @Test
     public void testFindAllTeacher() {
         teacherService.findAll();
         verify(teacherRepository, times(1)).findAll();
     }
 
+    /**
+     * Test de la méthode findById de TeacherService.
+     */
     @Test
     public void testFindTeacherById() {
         Long teacherId = 1L;

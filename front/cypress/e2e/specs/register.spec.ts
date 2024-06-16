@@ -1,7 +1,14 @@
-import '../../support/commands';
-
+/**
+ * Suite de tests pour la page de register
+ * @description Vérifie que l'utilisateur peut s'inscrire avec succès,
+ * que l'utilisateur ne peut pas s'inscrire avec des identifiants incorrects
+ * et que l'utilisateur ne peut pas s'inscrire
+ * @returns {void}
+ */
 export default function registerSpec() {
     describe('Register spec', () => {
+
+        // Test d'inscription réussie
         it('Register successfully', () => {
             cy.visit('/register');
 
@@ -25,6 +32,7 @@ export default function registerSpec() {
             cy.url().should('include', '/login');
         });
 
+        // Test d'inscription échouée - mauvais identifiants
         it('Register failed - error credentials', () => {
             cy.visit('/register');
 
@@ -45,6 +53,7 @@ export default function registerSpec() {
             cy.get('.error').should('contain', 'An error occurred');
         });
 
+        // Test d'inscription échouée - champ manquant
         it('Register failed - missing field', () => {
             cy.visit('/register');
 

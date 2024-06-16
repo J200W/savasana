@@ -1,5 +1,5 @@
 import {ListComponent} from "../../src/app/features/sessions/components/list/list.component";
-import {ComponentFixture, TestBed, waitForAsync} from "@angular/core/testing";
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 import {HttpClientModule} from "@angular/common/http";
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
@@ -10,7 +10,12 @@ import {By} from "@angular/platform-browser";
 import {of} from "rxjs";
 import {RouterTestingModule} from "@angular/router/testing";
 
+/**
+ * Test du composant ListComponent
+ */
 describe('Component: ListComponent', () => {
+
+    // Déclaration des variables
     let component: ListComponent;
     let fixture: ComponentFixture<ListComponent>;
     let mockSessionService = {
@@ -18,6 +23,7 @@ describe('Component: ListComponent', () => {
             admin: true
         }
     }
+
     let listSessions = [
         {
             id: 1,
@@ -32,6 +38,7 @@ describe('Component: ListComponent', () => {
     ];
     let debugElement: DebugElement;
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [ListComponent],
@@ -48,6 +55,7 @@ describe('Component: ListComponent', () => {
         fixture.detectChanges();
     });
 
+    // Test de l'affichage des sessions
     it('should list all sessions', () => {
         const user = component.user;
 
@@ -56,6 +64,7 @@ describe('Component: ListComponent', () => {
         expect(component.sessions$).not.toBe([]);
     });
 
+    // Test de l'affichage des boutons de création et d'édition de session
     it('should display the create | edit session buttons', () => {
         const user = component.user;
         const buttons: DebugElement[] = debugElement.queryAll(By.css('button'));
@@ -65,6 +74,7 @@ describe('Component: ListComponent', () => {
         expect(buttons.length).toBe(3);
     });
 
+    // Test de la dissimulation des boutons de création et d'édition de session
     it('should not display the create | edit session button', () => {
         mockSessionService.sessionInformation.admin = false;
         fixture.detectChanges();

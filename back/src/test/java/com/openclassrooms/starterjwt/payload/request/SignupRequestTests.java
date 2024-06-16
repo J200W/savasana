@@ -7,14 +7,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Les tests de la classe SignupRequest.
+ */
 @SpringBootTest
 public class SignupRequestTests {
 
+    /**
+     * Mock SignupRequest pour les tests.
+     */
     @Mock
     private SignupRequest signupRequest;
 
+    /**
+     * Initialisation des valeurs pour les tests.
+     */
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         signupRequest = new SignupRequest();
         signupRequest.setEmail("user@gmail.com");
         signupRequest.setFirstName("John");
@@ -22,58 +31,43 @@ public class SignupRequestTests {
         signupRequest.setPassword("password");
     }
 
+    /**
+     * Test des getters de la classe SignupRequest.
+     */
     @Test
-    public void testGetEmail() {
+    public void testSignupRequestGetters() {
         String email = signupRequest.getEmail();
         assertEquals("user@gmail.com", email);
-    }
-
-    @Test
-    public void testGetFirstName() {
         String firstName = signupRequest.getFirstName();
         assertEquals("John", firstName);
-    }
-
-    @Test
-    public void testGetLastName() {
         String lastName = signupRequest.getLastName();
         assertEquals("Doe", lastName);
-    }
-
-    @Test
-    public void testGetPassword() {
         String password = signupRequest.getPassword();
         assertEquals("password", password);
     }
 
+    /**
+     * Test des setters de la classe SignupRequest.
+     */
     @Test
-    public void testSetEmail() {
+    public void testSignupRequestSetters() {
         signupRequest.setEmail("set-user@gmail.com");
         String email = signupRequest.getEmail();
         assertEquals("set-user@gmail.com", email);
-    }
-
-    @Test
-    public void testSetFirstName() {
         signupRequest.setFirstName("set-John");
         String firstName = signupRequest.getFirstName();
         assertEquals("set-John", firstName);
-    }
-
-    @Test
-    public void testSetLastName() {
         signupRequest.setLastName("set-Doe");
         String lastName = signupRequest.getLastName();
         assertEquals("set-Doe", lastName);
-    }
-
-    @Test
-    public void testSetPassword() {
         signupRequest.setPassword("set-password");
         String password = signupRequest.getPassword();
         assertEquals("set-password", password);
     }
 
+    /**
+     * Test de la méthode equals() de la classe SignupRequest.
+     */
     @Test
     public void testEquals() {
         SignupRequest signupRequest2 = new SignupRequest();
@@ -88,6 +82,9 @@ public class SignupRequestTests {
         assertEquals(signupRequest, signupRequest);
     }
 
+    /**
+     * Test de la méthode equals() de la classe SignupRequest avec des valeurs différentes.
+     */
     @Test
     public void testNotEquals() {
         SignupRequest signupRequest2 = new SignupRequest();
@@ -101,12 +98,18 @@ public class SignupRequestTests {
         assertNotEquals(signupRequest.hashCode(), signupRequest2.hashCode());
     }
 
+    /**
+     * Test de la méthode equals() de la classe SignupRequest avec un objet de classe différente.
+     */
     @Test
     public void testEqualsDifferentClass() {
         Object differentClassObject = new Object();
         assertNotEquals(signupRequest, differentClassObject);
     }
 
+    /**
+     * Test de la méthode equals() de la classe SignupRequest avec des champs null.
+     */
     @Test
     public void testEqualsWithNullFields() {
         SignupRequest signupRequestWithNull1 = new SignupRequest();

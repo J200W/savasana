@@ -1,7 +1,3 @@
-/**
- * Test pour le composant RegisterComponent
- */
-
 import {RegisterComponent} from "../../src/app/features/auth/components/register/register.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {expect} from '@jest/globals';
@@ -19,7 +15,12 @@ import {NgZone} from "@angular/core";
 import {RouterTestingModule} from "@angular/router/testing";
 import {LoginComponent} from "../../src/app/features/auth/components/login/login.component";
 
+/**
+ * Test du composant RegisterComponent
+ */
 describe('Component: RegisterComponent', () => {
+
+    // Déclaration des variables
     let component: RegisterComponent;
     let fixture: ComponentFixture<RegisterComponent>;
     let authService: AuthService;
@@ -28,6 +29,7 @@ describe('Component: RegisterComponent', () => {
     let spyRouter: jest.SpyInstance;
     let ngZone: NgZone;
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [RegisterComponent],
@@ -46,6 +48,7 @@ describe('Component: RegisterComponent', () => {
         })
             .compileComponents();
 
+        // On récupère les services et on les initialise
         fixture = TestBed.createComponent(RegisterComponent);
         component = fixture.componentInstance;
         authService = TestBed.inject(AuthService);
@@ -56,11 +59,13 @@ describe('Component: RegisterComponent', () => {
         fixture.detectChanges();
     });
 
+    // Test de la possibilité de soumettre le formulaire
     it('should be able to submit the form', () => {
         component.submit();
         expect(spySubmit).toHaveBeenCalled();
     });
 
+    // Test de la soumission du formulaire avec succès
     it('should submit successfully', () => {
         const randomInt = Math.floor(Math.random() * 4000);
 
@@ -86,6 +91,7 @@ describe('Component: RegisterComponent', () => {
         expect(spyRouter).toHaveBeenCalled();
     });
 
+    // Test de la soumission du formulaire avec une erreur
     it('shouldn\'t submit with an error', () => {
         const registerRequest = {
             email: 'nimportequoi@gmail.com',
