@@ -18,28 +18,54 @@ import java.io.IOException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+/**
+ * Test des méthodes de la classe AuthEntryPointJwt
+ */
 @SpringBootTest
 public class AuthEntryPontJwtTests {
 
+    /**
+     * Objet HttpServletRequest pour les tests
+     */
     private HttpServletRequest request;
 
+    /**
+     * Objet HttpServletResponse pour les tests
+     */
     private HttpServletResponse response;
 
+    /**
+     * Objet AuthenticationException pour les tests
+     */
     private AuthenticationException authException;
 
+    /**
+     * Mock de l'objet Logger
+     */
     @Mock
     private Logger logger;
 
+    /**
+     * Injection de dépendances de la classe AuthEntryPointJwt
+     */
     @InjectMocks
     private AuthEntryPointJwt authEntryPointJwt;
 
+    /**
+     * Initialisation des objets avant chaque test
+     */
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         authException = new AuthenticationException("Unauthorized error") {};
     }
 
+    /**
+     * Test de la méthode commence
+     * @throws ServletException
+     * @throws IOException
+     */
     @Test
     public void testCommence() throws ServletException, IOException {
         authEntryPointJwt.commence(request, response, authException);

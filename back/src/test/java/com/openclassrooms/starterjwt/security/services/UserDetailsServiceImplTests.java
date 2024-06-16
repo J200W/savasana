@@ -15,18 +15,33 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Les tests de UserDetailsServiceImpl.
+ */
 public class UserDetailsServiceImplTests {
 
+    /**
+     * Mock de UserRepository.
+     */
     @Mock
     private UserRepository userRepository;
 
+    /**
+     * Injection des dépendances de UserDetailsServiceImpl.
+     */
     @InjectMocks
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
+    /**
+     * Objet User.
+     */
     private User user;
 
+    /**
+     * Initialisation des objets avant chaque test.
+     */
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         user = new User(1L, "user@gmail.com", "Lastname", "Firstname", "test!1234", true, LocalDateTime.now(), LocalDateTime.now());
 
         userRepository = mock(UserRepository.class);
@@ -34,6 +49,9 @@ public class UserDetailsServiceImplTests {
         when(userRepository.findByEmail(any(String.class))).thenReturn(java.util.Optional.of(user));
     }
 
+    /**
+     * Test de la méthode loadUserByUsername.
+     */
     @Test
     public void testLoadUserByUsername() {
         User userRepo = userRepository.findByEmail("user@gmail.com")

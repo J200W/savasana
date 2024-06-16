@@ -8,36 +8,59 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test des méthodes de la classe UserDetailsImpl
+ */
 @SpringBootTest
 public class UserDetailsImplTests {
 
-    private UserDetailsImpl.UserDetailsImplBuilder builder;
-
+    /**
+     * Mock de la classe UserDetailsImpl
+     */
     @Mock
     private UserDetailsImpl userDetailsImpl;
 
+    /**
+     * Mock de la classe UserRepository
+     */
     @Mock
     private UserRepository userRepository;
 
+    /**
+     * Object UserDetailsImpl.UserDetailsImplBuilder
+     */
+    private UserDetailsImpl.UserDetailsImplBuilder builder;
+
+    /**
+     * Object User
+     */
     private User user;
 
+    /**
+     * Initialisation des objets avant chaque test
+     */
     @BeforeEach
-    public void setUp() {
-        user = new User(1L, "user@gmail.com", "Lastname", "Firstname", "test!1234", true, LocalDateTime.now(), LocalDateTime.now());
-
+    public void beforeEach() {
+        user = new User(1L, "user@gmail.com",
+                "Lastname", "Firstname",
+                "test!1234", true, LocalDateTime.now(), LocalDateTime.now());
         userDetailsImpl = new UserDetailsImpl(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isAdmin(), user.getPassword());
     }
 
+    /**
+     * Test de la méthode builder de la classe UserDetailsImpl
+     */
     @Test
     public void testBuilder() {
+        // Mock de la méthode findByEmail de la classe UserRepository
         when(userRepository.findByEmail(any(String.class))).thenReturn(java.util.Optional.of(user));
 
+        // Récupération de l'utilisateur par son email
         User userRepo = userRepository.findByEmail("user@gmail.com")
                 .orElseThrow(() -> new RuntimeException("Error: User is not found."));
 
@@ -53,6 +76,9 @@ public class UserDetailsImplTests {
         assertNotNull(userDetails);
     }
 
+    /**
+     * Test de la méthode equals de la classe UserDetailsImpl
+     */
     @Test
     public void testGetters() {
         assertEquals(1L, userDetailsImpl.getId());
@@ -63,24 +89,36 @@ public class UserDetailsImplTests {
         assertEquals("Lastname", userDetailsImpl.getLastName());
     }
 
+    /**
+     * Test des méthodes de la classe UserDetailsImpl
+     */
     @Test
     public void testAccountNonExpired() {
         boolean accountNonExpired = userDetailsImpl.isAccountNonExpired();
         assertTrue(accountNonExpired);
     }
 
+    /**
+     * Test des méthodes de la classe UserDetailsImpl
+     */
     @Test
     public void testAccountNonLocked() {
         boolean accountNonLocked = userDetailsImpl.isAccountNonLocked();
         assertTrue(accountNonLocked);
     }
 
+    /**
+     * Test des méthodes de la classe UserDetailsImpl
+     */
     @Test
     public void testCredentialsNonExpired() {
         boolean credentialsNonExpired = userDetailsImpl.isCredentialsNonExpired();
         assertTrue(credentialsNonExpired);
     }
 
+    /**
+     * Test des méthodes de la classe UserDetailsImpl
+     */
     @Test
     public void testEnabled() {
         boolean enabled = userDetailsImpl.isEnabled();
@@ -95,6 +133,9 @@ public class UserDetailsImplTests {
         assertEquals(userDetailsImpl, userDetailsImpl);
     }
 
+    /**
+     * Test de la méthode hashCode de la classe UserDetailsImpl
+     */
     @Test
     public void testAdminMethodViaPublicMethod() {
         builder = new UserDetailsImpl.UserDetailsImplBuilder();
@@ -107,6 +148,9 @@ public class UserDetailsImplTests {
         assertFalse(userDetails.getAdmin());
     }
 
+    /**
+     * Test de la méthode hashCode de la classe UserDetailsImpl
+     */
     @Test
     public void testToString() {
         builder = new UserDetailsImpl.UserDetailsImplBuilder();

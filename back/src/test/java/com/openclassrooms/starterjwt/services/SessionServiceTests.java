@@ -23,23 +23,45 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+/**
+ * Les tests de SessionService.
+ */
 @ExtendWith(MockitoExtension.class)
 public class SessionServiceTests {
 
+    /**
+     * Mocker le repository de session.
+     */
     @Mock
     private SessionRepository sessionRepository;
 
+    /**
+     * Mocker le repository d'utilisateur.
+     */
     @Mock
     private UserRepository userRepository;
 
+    /**
+     * Injecter les dépendances dans le service de session.
+     */
     @InjectMocks
     private SessionService sessionService;
 
+    /**
+     * Objet session.
+     */
     private static Session session;
+
+    /**
+     * Objet utilisateur.
+     */
     private static User user;
 
+    /**
+     * Initialisation de user avant tout les tests.
+     */
     @BeforeAll
-    static void setUp() {
+    static void beforeAll() {
         Date date = new Date();
         LocalDateTime localDateTime = LocalDateTime.now();
         Teacher teacher = new Teacher(1L, "lastName", "firstName", localDateTime, localDateTime);
@@ -50,36 +72,54 @@ public class SessionServiceTests {
         session = new Session(1L, "name", date, "description", teacher, users, localDateTime, localDateTime);
     }
 
+    /**
+     * Test de la création d'une session.
+     */
     @Test
     public void testCreateSession() {
         sessionService.create(session);
         verify(sessionRepository, times(1)).save(session);
     }
 
+    /**
+     * Test de la suppression d'une session.
+     */
     @Test
     public void testDeleteSession() {
         sessionService.delete(session.getId());
         verify(sessionRepository, times(1)).deleteById(session.getId());
     }
 
+    /**
+     * Test de la recherche de toutes les sessions.
+     */
     @Test
     public void testFindAllSessions() {
         sessionService.findAll();
         verify(sessionRepository, times(1)).findAll();
     }
 
+    /**
+     * Test de la recherche d'une session par son id.
+     */
     @Test
     public void testFindSessionById() {
         sessionService.getById(session.getId());
         verify(sessionRepository, times(1)).findById(session.getId());
     }
 
+    /**
+     * Test de la mise à jour d'une session.
+     */
     @Test
     public void testUpdateSession() {
         sessionService.update(session.getId(), session);
         verify(sessionRepository, times(1)).save(session);
     }
 
+    /**
+     * Test de la participation à une session.
+     */
     @Test
     public void testParticipateSession() {
 
@@ -91,6 +131,9 @@ public class SessionServiceTests {
         verify(sessionRepository, times(1)).save(session);
     }
 
+    /**
+     * Test de la participation à une session avec une session inexistante.
+     */
     @Test
     public void testParticpate404() {
         when(sessionRepository.findById(session.getId())).thenReturn(Optional.empty());
@@ -102,6 +145,9 @@ public class SessionServiceTests {
         });
     }
 
+    /**
+     * Test de la participation à une session avec un utilisateur inexistant.
+     */
     @Test
     public void testAlreadyParticipateSession() {
 
@@ -113,6 +159,9 @@ public class SessionServiceTests {
         assertThrows(BadRequestException.class, () -> sessionService.participate(session.getId(), user.getId()));
     }
 
+    /**
+     * Test de la participation à une session avec un utilisateur déjà participant.
+     */
     @Test
     public void testUnParticipateSession() {
         when(sessionRepository.findById(session.getId())).thenReturn(java.util.Optional.of(session));
@@ -121,6 +170,9 @@ public class SessionServiceTests {
         verify(sessionRepository, times(1)).save(session);
     }
 
+    /**
+     * Test de la participation à une session avec un utilisateur déjà participant.
+     */
     @Test
     public void testAlreadyUnParticipateSession() {
         LocalDateTime localDateTime = LocalDateTime.now();

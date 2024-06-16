@@ -16,22 +16,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test de UserService
+ */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
 
+    /**
+     * Mocker UserRepository
+     */
     @Mock
     private UserRepository userRepository;
 
+    /**
+     * Injection de UserRepository dans UserService
+     */
     @InjectMocks
     private UserService userService;
 
+    /**
+     * Date actuelle
+     */
     private LocalDateTime now;
 
+    /**
+     * Initialisation de la date actuelle avant chaque test
+     */
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         now = LocalDateTime.now();
     }
 
+    /**
+     * Test de la méthode saveUser
+     */
     @Test
     public void testDeleteUser() {
         Long userId = 1L;
@@ -39,6 +57,9 @@ public class UserServiceTests {
         verify(userRepository, times(1)).deleteById(userId);
     }
 
+    /**
+     * Test de la méthode findUserById
+     */
     @Test
     public void testFindUserById() {
         Long userId = 1L;
@@ -55,6 +76,9 @@ public class UserServiceTests {
         verify(userRepository, times(1)).findById(userId);
     }
 
+    /**
+     * Test de la méthode findUserById si l'utilisateur n'est pas trouvé
+     */
     @Test
     public void testFindUserByIdNotFound() {
         Long userId = 1L;
