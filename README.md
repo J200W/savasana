@@ -29,8 +29,14 @@ Cloner le projet:
 2 - Installer les dépendances maven:
 
 > mvn install
+
+3 - Configurer le fichier .env:
+
+> savasana/back/src/main/resources/.env
+
+Remplacer les valeurs par les vôtres.
  
-3 - Lancer le back-end:
+4 - Lancer le back-end:
 
 > mvn spring-boot:run
 
