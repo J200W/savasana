@@ -1,7 +1,10 @@
+/**
+ * Commandes personnalisées pour Login
+ */
 Cypress.Commands.add('login', ({ admin = false } = {}) => {
     cy.visit('/login');
 
-    // Intercept session and login requests
+    // Intercepter la requête de session pour attendre la fin du processus de connexion
     cy.intercept('GET', '/api/session', { fixture: 'sessions-list.res' }).as('getLogin');
     let email = "yoga@studio.com"
 
@@ -13,11 +16,11 @@ Cypress.Commands.add('login', ({ admin = false } = {}) => {
         email = "yoga-user@studio.com"
     }
 
-    // Fill in login form and submit
+    // Remplir le formulaire de connexion
     cy.get('input[formControlName=email]').type(email);
     cy.get('input[formControlName=password]').type('test!1234{enter}{enter}');
 
-    // Wait for login process to complete
+    // Attendre la fin de la requête de connexion
     cy.wait('@getLogin');
 
     cy.request('POST', 'http://localhost:8080/api/auth/login', {
@@ -26,6 +29,9 @@ Cypress.Commands.add('login', ({ admin = false } = {}) => {
     })
 });
 
+/**
+ * Commande personnalisée pour remplir le formulaire d'inscription
+ */
 Cypress.Commands.add('fillRegistrationForm', ({ firstName, lastName, email, password }) => {
     cy.get('input[formControlName=firstName]').type(firstName);
     cy.get('input[formControlName=lastName]').type(lastName);
@@ -33,7 +39,13 @@ Cypress.Commands.add('fillRegistrationForm', ({ firstName, lastName, email, pass
     cy.get('input[formControlName=password]').type(`${password}{enter}`);
 });
 
+/**
+ * Commande personnalisée pour afficher les détails d'une session
+ */
 Cypress.Commands.add('showSessionDetails', ({ participate = false } = {}) => {
+    // Intercepter la requête de session en fonction de la participation
+    // pour attendre la fin du chargement
+
     if (participate) {
         cy.intercept('GET', '/api/session/*', { fixture: 'session-participated.res' }).as('getSession');
     }

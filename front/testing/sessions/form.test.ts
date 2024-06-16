@@ -18,7 +18,11 @@ import {of, throwError} from 'rxjs';
 import {ListComponent} from "../../src/app/features/sessions/components/list/list.component";
 import {NgZone} from "@angular/core";
 
+/**
+ * Test du composant FormComponent
+ */
 describe('Component: FormComponent', () => {
+    // Déclaration des variables
     let component: FormComponent;
     let fixture: ComponentFixture<FormComponent>;
     let spySubmit: jest.SpyInstance;
@@ -33,6 +37,7 @@ describe('Component: FormComponent', () => {
         }
     }
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
 
@@ -75,11 +80,13 @@ describe('Component: FormComponent', () => {
         fixture.detectChanges();
     });
 
+    // Test de la possibilité de soumettre le formulaire
     it('should be able to submit the form', () => {
         component.submit();
         expect(spySubmit).toHaveBeenCalled();
     });
 
+    // Test de la soumission du formulaire avec succès
     it('should create successfully', () => {
         component.onUpdate = false;
 
@@ -108,6 +115,7 @@ describe('Component: FormComponent', () => {
         expect(spyRouter).toHaveBeenCalledWith(['sessions']);
     });
 
+    // Test de la soumission du formulaire avec une erreur
     it('should not create with an error', () => {
         component.onUpdate = false;
 
@@ -130,6 +138,7 @@ describe('Component: FormComponent', () => {
         expect(spyRouter).not.toHaveBeenCalled();
     });
 
+    // Test de la mise à jour du formulaire
     it('should update successfully', () => {
         component.onUpdate = true;
         const date = new Date();
@@ -161,6 +170,7 @@ describe('Component: FormComponent', () => {
         expect({...component.sessionForm?.value, users:[]}).toEqual(mockResponse);
     });
 
+    // Test de la mise à jour du formulaire avec une erreur
     it('should not update with an error', () => {
         component.onUpdate = true;
 
@@ -183,9 +193,8 @@ describe('Component: FormComponent', () => {
         expect(spyRouter).not.toHaveBeenCalled();
     });
 
+    // Test de la redirection vers la liste des sessions
     it('should redirect to sessions if user is not admin', () => {
-        // Mock the private proprety sessionInformation to be false
-        // It is a private proprety so we can't access it directly
         Object.defineProperty(component, 'sessionService', {value: {sessionInformation: {admin: false}}});
 
         ngZone.run(() => {

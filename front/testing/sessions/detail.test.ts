@@ -18,7 +18,11 @@ import {Router} from "@angular/router";
 import {ListComponent} from "../../src/app/features/sessions/components/list/list.component";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 
+/**
+ * Test du composant DetailComponent
+ */
 describe('Component: DetailComponent', () => {
+    // Déclaration des variables
     let component: DetailComponent;
     let fixture: ComponentFixture<DetailComponent>;
     let service: SessionService;
@@ -30,6 +34,7 @@ describe('Component: DetailComponent', () => {
     let matSnackBar: MatSnackBar;
     let httpMock: HttpTestingController;
 
+    // Mock de la session
     const mockSessionService = {
         sessionInformation: {
             admin: true,
@@ -37,6 +42,7 @@ describe('Component: DetailComponent', () => {
         }
     }
 
+    // Mock des données de la session
     const session: Session = {
         id: 1,
         name: 'Test Name',
@@ -48,6 +54,7 @@ describe('Component: DetailComponent', () => {
         updatedAt: new Date()
     }
 
+    // Mock des données de l'enseignant
     const teacher: Teacher = {
         id: 1,
         lastName: 'Test Lastname',
@@ -56,6 +63,7 @@ describe('Component: DetailComponent', () => {
         updatedAt: new Date()
     }
 
+    // Avant chaque test on configure le composant et on récupère les services
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
@@ -73,6 +81,8 @@ describe('Component: DetailComponent', () => {
             providers: [{provide: SessionService, useValue: mockSessionService}, {provide: SessionApiService}],
         })
             .compileComponents();
+
+        // Création du composant et récupération des services et du router
         service = TestBed.inject(SessionService);
         serviceApi = TestBed.inject(SessionApiService);
         fixture = TestBed.createComponent(DetailComponent);
@@ -83,22 +93,19 @@ describe('Component: DetailComponent', () => {
         component = fixture.componentInstance;
         component.session = session;
         component.teacher = teacher;
-        // component.userId = String(service.sessionInformation!.id);
         component.sessionId = String(session.id);
         ngZone = TestBed.inject(NgZone);
         debugElement = fixture.debugElement;
         fixture.detectChanges();
     });
 
-    it('should create the component', () => {
-        expect(component).toBeDefined();
-    });
-
+    // Test de l'existance du composant
     it('should have a session', () => {
         component.isAdmin = service.sessionInformation!.admin;
         expect(component.session).toBeDefined();
     });
 
+    // Test de la possibilité de retourner en arrière
     it('should go back', () => {
         const spyBack = jest.spyOn(window.history, 'back').mockReturnValue(undefined);
 
@@ -109,6 +116,7 @@ describe('Component: DetailComponent', () => {
         expect(spyBack).toHaveBeenCalled();
     });
 
+    // Test de la suppression de la session
     it('should delete successfully', () => {
         const spyDelete = jest.spyOn(serviceApi, 'delete').mockReturnValue(of({}));
         const spyMatSnackBar = jest.spyOn(matSnackBar, 'open').mockReturnThis();
@@ -122,6 +130,7 @@ describe('Component: DetailComponent', () => {
         expect(spyRouter).toHaveBeenCalledWith(['sessions']);
     });
 
+    // Test de la participation à la session
     it('should display the delete button', () => {
         const button: DebugElement = debugElement.query(By.css('button[color="warn"]'));
 
@@ -129,6 +138,7 @@ describe('Component: DetailComponent', () => {
         expect(button.nativeElement.textContent).toContain('Delete');
     });
 
+    // Test de l'affichage du nom de la session
     it('should display the session\'s name', () => {
         const name = debugElement.query(By.css('h1'));
 
@@ -136,12 +146,14 @@ describe('Component: DetailComponent', () => {
         expect(name.nativeElement.textContent).toContain(session.name);
     });
 
+    // Test de l'affichage du nom de l'enseignant
     it('should display the teacher\'s name', () => {
         const teacher = debugElement.query(By.css('.ml3'));
         expect(teacher).toBeDefined();
         expect(teacher).not.toBe(null);
     });
 
+    // Test de l'affichage des dates et des participants de la session
     it('should display the session\'s dates and attendees', () => {
         const sessionInfo = debugElement.queryAll(By.css('.my2 > div[fxLayoutAlign="start center"]'));
         const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -152,6 +164,7 @@ describe('Component: DetailComponent', () => {
         expect(sessionInfo[1].nativeElement.textContent).toContain(formattedDate);
     });
 
+    // Test de l'affichage de la description de la session
     it('should display the session\'s description', () => {
         const description = debugElement.query(By.css('mat-card-content > div:not([fxLayout="row"])'));
 
@@ -170,6 +183,7 @@ describe('Component: DetailComponent', () => {
         expect(sessionDates[1].nativeElement.textContent).toContain('Last update:  ' + formattedDate);
     });
 
+    // Test de la participation à la session
     it('should participate successfully', () => {
         const spyParticipate = jest.spyOn(serviceApi, 'participate').mockReturnValue(of(void {}));
         const fetchSessionSpy = jest.spyOn(component as any, 'fetchSession').mockImplementation(() => {
@@ -185,6 +199,7 @@ describe('Component: DetailComponent', () => {
         expect(component.session?.name).toBe('Test Name');
     });
 
+    // Test de la non-participation à la session
     it('should unParticipate successfully', () => {
         const spyUnParticipate = jest.spyOn(serviceApi, 'unParticipate').mockReturnValue(of(void {}));
         const fetchSessionSpy = jest.spyOn(component as any, 'fetchSession').mockImplementation(() => {
@@ -198,7 +213,7 @@ describe('Component: DetailComponent', () => {
         expect(fetchSessionSpy).toHaveBeenCalled();
         expect(component.session?.name).toBe('Test Name');
 
-        // Mock the GET request made by fetchSession
+        // Mocker la réponse de fetchSession pour vérifier que la session a bien été mise à jour
         const req = httpMock.expectOne(`api/session/${session.id}`);
         expect(req.request.method).toBe('GET');
         req.flush(session); // Provide a mock response
