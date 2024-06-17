@@ -73,7 +73,7 @@ Le rapport est disponible ici:
 
 > front/coverage/lcov-report/index.html
  
-<img width="550" alt="Capture d’écran 2024-06-17 à 20 47 24" src="https://github.com/J200W/savasana/assets/94389835/bca995cc-d5c7-4b36-8972-216c22937400">
+<img width="700" alt="Capture d’écran 2024-06-17 à 20 47 24" src="https://github.com/J200W/savasana/assets/94389835/bca995cc-d5c7-4b36-8972-216c22937400">
 
 ### Test unitaire (Jest)
 
@@ -89,7 +89,7 @@ Couverture des tests:
 
 > npm run test:coverage --roots testing
 
-<img width="550" alt="Capture d’écran 2024-06-17 à 20 45 20" src="https://github.com/J200W/savasana/assets/94389835/37b62d32-df1b-441a-add4-2b83dab9b4d1">
+<img width="700" alt="Capture d’écran 2024-06-17 à 20 45 20" src="https://github.com/J200W/savasana/assets/94389835/37b62d32-df1b-441a-add4-2b83dab9b4d1">
 
 ### Backend
 
@@ -101,4 +101,4 @@ Ou pour un test spécifique:
 
 > mvn test -Dtest=TestClassName
 
-<img width="550" alt="Capture d’écran 2024-06-17 à 20 46 40" src="https://github.com/J200W/savasana/assets/94389835/7065d4ff-8185-4c6c-bea2-ac8453b88ccb">
+<img width="700" alt="Capture d’écran 2024-06-17 à 20 46 40" src="https://github.com/J200W/savasana/assets/94389835/7065d4ff-8185-4c6c-bea2-ac8453b88ccb">
