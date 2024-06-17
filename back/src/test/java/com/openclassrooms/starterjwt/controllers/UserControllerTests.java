@@ -7,19 +7,21 @@ import com.openclassrooms.starterjwt.services.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Les tests de la classe UserController.
@@ -28,170 +30,163 @@ import static org.mockito.Mockito.*;
 public class UserControllerTests {
 
     /**
+     * MockMvc pour simuler les requêtes HTTP
+     */
+    private MockMvc mockMvc;
+
+    /**
+     * Objet User
+     */
+    private static User userMock;
+
+    /**
+     * Objet UserDto
+     */
+    private static UserDto userDtoMock;
+
+    /**
      * Mocker UserService
      */
-    @Mock
+    @MockBean
     private UserService userService;
 
     /**
      * Mocker UserMapper
      */
-    @Mock
+    @MockBean
     private UserMapper userMapper;
-
-    /**
-     * Injection de dépendances de la classe UserController
-     */
-    @InjectMocks
-    private UserController userController;
 
     /**
      * Mocker UserDetails
      */
-    @Mock
+    @MockBean
     private UserDetails userDetails;
 
     /**
      * Mocker Authentication
      */
-    @Mock
+    @MockBean
     private Authentication authentication;
 
     /**
-     * Mocker le contexte de sécurité
+     * Initialisation des objets avant les tests
      */
-    @Mock
+    @MockBean
     private SecurityContext securityContext;
 
     /**
-     * Initialiser userMock
-     */
-    private static User userMock;
-
-    /**
-     * Initialiser userDtoMock
-     */
-    private static UserDto userDtoMock;
-
-    /**
-     * Initialiser les objets avant les tests
+     * Initialisation des objets avant les tests
      */
     @BeforeAll
     static void beforeAll() {
-        // Initialiser les objets User et UserDto
         LocalDateTime localDateTime = LocalDateTime.now();
         userMock = new User("johndoe@gmail.com", "Doe", "John", "test!1234", false);
         userDtoMock = new UserDto(1L, "johndoe@gmail.com", "Doe", "John", false, "test!1234", localDateTime, localDateTime);
     }
 
     /**
-     * Initialiser le contexte de sécurité Spring avant chaque test
+     * Initialisation du MockMvc avant chaque test
      */
     @BeforeEach
-    void beforeEach() {
+    void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(new UserController(
+                userService,
+                userMapper)
+        ).build();
+
         SecurityContextHolder.setContext(securityContext);
         when(securityContext.getAuthentication()).thenReturn(authentication);
-
-        // Mocker l'objet UserDetails
         when(authentication.getPrincipal()).thenReturn(userDetails);
     }
 
     /**
-     * Test de la méthode findUserById
+     * Test de la méthode findById de UserController.
      * @throws Exception
      */
     @Test
     public void testFindUserById() throws Exception {
         when(userService.findById(1L)).thenReturn(userMock);
         when(userMapper.toDto(userMock)).thenReturn(userDtoMock);
-        ResponseEntity<?> response = userController.findById("1");
-        assertEquals(200, response.getStatusCode().value());
+        this.mockMvc.perform(get("/api/user/1"))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Test de la méthode findUserById avec un utilisateur non trouvé
+     * Test de la méthode findById de UserController avec un utilisateur non trouvé.
      * @throws Exception
      */
     @Test
     public void testFindUserByIdNotFound() throws Exception {
-        when(userService.findById(1L)).thenReturn(null); // Utilisateur non trouvé
-
-        ResponseEntity<?> response = userController.findById("1");
-        assertEquals(404, response.getStatusCode().value());
+        when(userService.findById(1L)).thenReturn(null);
+        this.mockMvc.perform(get("/api/user/1"))
+                .andExpect(status().isNotFound());
     }
 
     /**
-     * Test de la méthode findUserById avec un utilisateur non autorisé
+     * Test de la méthode findById de UserController avec un utilisateur non autorisé.
      * @throws Exception
      */
     @Test
     public void testFindUserByIdFormatIncorrect() throws Exception {
-        ResponseEntity<?> response = userController.findById("abc");
-        assertEquals(400, response.getStatusCode().value());
+        this.mockMvc.perform(get("/api/user/abc"))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Test de la méthode delete
+     * Test de la méthode delete de UserController.
      * @throws Exception
      */
     @Test
     public void testDeleteUser() throws Exception {
-        // Mocker le service UserService et le retour de l'utilisateur
         when(userService.findById(1L)).thenReturn(userMock);
         when(userDetails.getUsername()).thenReturn("johndoe@gmail.com");
-
-        ResponseEntity<?> response = userController.save("1");
-        assertEquals(200, response.getStatusCode().value());
+        this.mockMvc.perform(delete("/api/user/1"))
+                .andExpect(status().isOk());
         verify(userService, times(1)).delete(1L);
     }
 
     /**
-     * Test de la méthode delete avec un utilisateur non trouvé
+     * Test de la méthode delete de UserController avec un utilisateur non trouvé.
      * @throws Exception
      */
     @Test
     public void testDeleteUserNotFound() throws Exception {
-        // Mocker le service UserService et le retour de l'utilisateur
         when(userService.findById(1L)).thenReturn(null);
         when(userDetails.getUsername()).thenReturn("johndoe@gmail.com");
-
-        ResponseEntity<?> response = userController.save("1");
-        assertEquals(404, response.getStatusCode().value());
+        this.mockMvc.perform(delete("/api/user/1"))
+                .andExpect(status().isNotFound());
     }
 
     /**
-     * Test de la méthode delete avec un utilisateur non autorisé
+     * Test de la méthode delete de UserController avec un utilisateur non autorisé.
      * @throws Exception
      */
     @Test
     public void testDeleteUserUnauthorized() throws Exception {
         User anotherUserMock = new User("anotheruser@gmail.com", "Doe", "Jane", "test!1234", false);
-
-        // Mocker le service UserService et le retour de l'utilisateur
         when(userService.findById(1L)).thenReturn(anotherUserMock);
         when(userDetails.getUsername()).thenReturn("johndoe@gmail.com");
-
-        ResponseEntity<?> response = userController.save("1");
-        assertEquals(401, response.getStatusCode().value());
+        this.mockMvc.perform(delete("/api/user/1"))
+                .andExpect(status().isUnauthorized());
     }
 
     /**
-     * Test de la méthode delete avec un format incorrect
+     * Test de la méthode delete de UserController avec un format incorrect.
      * @throws Exception
      */
     @Test
     public void testDeleteUserFormatIncorrect() throws Exception {
-        ResponseEntity<?> response = userController.save("abc"); // Format incorrect
-        assertEquals(400, response.getStatusCode().value());
+        this.mockMvc.perform(delete("/api/user/abc"))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Test de la méthode delete avec un utilisateur non trouvé
+     * Test de la méthode findAll de UserController.
      * @throws Exception
      */
     @Test
     public void testNotFoundException() throws Exception {
-        ResponseEntity<?> response = userController.findById("100"); // Utilisateur non trouvé
-        assertEquals(404, response.getStatusCode().value());
+        this.mockMvc.perform(get("/api/user/100"))
+                .andExpect(status().isNotFound());
     }
 }

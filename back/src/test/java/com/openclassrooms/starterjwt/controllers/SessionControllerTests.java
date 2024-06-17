@@ -1,23 +1,28 @@
 package com.openclassrooms.starterjwt.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.openclassrooms.starterjwt.dto.SessionDto;
 import com.openclassrooms.starterjwt.mapper.SessionMapper;
 import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.services.SessionService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Les tests de la classe SessionController.
@@ -26,49 +31,55 @@ import static org.mockito.Mockito.when;
 public class SessionControllerTests {
 
     /**
-     * Mocker SessionMapper.
+     * MockMvc pour simuler les requêtes HTTP
      */
-    @Mock
-    private SessionMapper sessionMapper;
+    private MockMvc mockMvc;
 
     /**
-     * Mocker SessionService.
-     */
-    @Mock
-    private SessionService sessionService;
-
-    /**
-     * Injection de dépendances de la classe SessionController.
-     */
-    @InjectMocks
-    private SessionController sessionController;
-
-    /**
-     * Initialiser le mock de Session.
+     * Objet Session
      */
     private static Session sessionMock;
 
     /**
-     * Initialiser le mock de SessionDto.
+     * Objet SessionDto
      */
     private static SessionDto sessionDtoMock;
 
     /**
-     * Initialiser le mock de la liste de Session.
+     * Objet List<Session>
      */
     private static List<Session> sessionsListMock;
 
     /**
-     * Initialiser les mocks.
+     * ObjectMapper pour convertir les objets en JSON
+     */
+    private static ObjectMapper objectMapper;
+
+    /**
+     * Mocker SessionMapper
+     */
+    @MockBean
+    private SessionMapper sessionMapper;
+
+    /**
+     * Mocker SessionService
+     */
+    @MockBean
+    private SessionService sessionService;
+
+    /**
+     * Initialisation des objets avant les tests
      */
     @BeforeAll
     static void beforeAll() {
+        objectMapper = JsonMapper.builder()
+                .addModule(new JavaTimeModule())
+                .build();
         Date date = new Date();
         List<Long> users = new LinkedList<>();
         users.add(1L);
         LocalDateTime localDateTime = LocalDateTime.now();
         sessionDtoMock = new SessionDto(1L, "name", date, 1L, "description", users, localDateTime, localDateTime);
-
         sessionMock = new Session();
         sessionsListMock = new LinkedList<>();
         sessionsListMock.addFirst(sessionMock);
@@ -76,144 +87,154 @@ public class SessionControllerTests {
     }
 
     /**
-     * Tester la méthode findById avec succès.
+     * Initialisation du MockMvc
+     */
+    @BeforeEach
+    void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(new SessionController(
+                sessionService,
+                sessionMapper)
+        ).build();
+    }
+
+    /**
+     * Test de la méthode findSessionById avec succès
+     *
      * @throws Exception
      */
     @Test
     public void testFindSessionByIdSuccess() throws Exception {
+        // Preparer l'id de la session
         String id = "1";
 
-        // Mocker le retour de la méthode getById de SessionService
         when(sessionService.getById(Long.valueOf(id))).thenReturn(sessionMock);
 
-        ResponseEntity<?> response = sessionController.findById(id);
-        assertEquals(200, response.getStatusCodeValue());
+        // Appeler la méthode du contrôleur et vérifier le résultat
+        mockMvc.perform(get("/api/session/" + id))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode findById avec session non trouvée.
+     * Test de la méthode findSessionById avec session non trouvée
+     *
      * @throws Exception
      */
     @Test
     public void testFindSessionByIdNotFound() throws Exception {
         String id = "99"; // Non trouvé
-
-        // Mocker le retour de la méthode getById de SessionService
         when(sessionService.getById(Long.valueOf(id))).thenReturn(null);
 
-        ResponseEntity<?> response = sessionController.findById(id);
-        assertEquals(404, response.getStatusCodeValue());
+        mockMvc.perform(get("/api/session/" + id))
+                .andExpect(status().isNotFound());
     }
 
     /**
-     * Tester la méthode findById avec format incorrect.
+     * Test de la méthode findSessionById avec format incorrect
      * @throws Exception
      */
     @Test
     public void testFindSessionByIdFormatIncorrect() throws Exception {
-        String id = "abc"; // Mauvais format
+        String id = "abc"; // Format incorrect
 
-        ResponseEntity<?> response = sessionController.findById(id);
-        assertEquals(400, response.getStatusCodeValue());
+        mockMvc.perform(get("/api/session/" + id))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Tester la méthode findAll avec succès.
+     * Test de la méthode findAllSession avec succès
      * @throws Exception
      */
     @Test
     public void testFindAllSessionSuccess() throws Exception {
-        // Mocker le retour de la méthode findAll de SessionService
         when(sessionService.findAll()).thenReturn(sessionsListMock);
 
-        ResponseEntity<?> response = sessionController.findAll();
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(get("/api/session"))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode create avec succès.
+     * Test de la méthode create avec succès
      * @throws Exception
      */
     @Test
     public void testCreateSessionSuccess() throws Exception {
-        // Mocker le retour de la méthode create de SessionService
         when(sessionService.create(sessionMapper.toEntity(sessionDtoMock))).thenReturn(sessionMock);
 
-        ResponseEntity<?> response = sessionController.create(sessionDtoMock);
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(post("/api/session")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(sessionDtoMock)))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode update avec succès.
+     * Test de la méthode update avec format incorrect
      * @throws Exception
      */
     @Test
     public void testUpdateSessionSuccess() throws Exception {
         String id = "1";
-
-        // Mocker le retour de la méthode update de SessionService
         when(sessionService.update(Long.parseLong(id), sessionMapper.toEntity(sessionDtoMock))).thenReturn(sessionMock);
 
-        ResponseEntity<?> response = sessionController.update(id, sessionDtoMock);
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(put("/api/session/1")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(sessionDtoMock)))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode update avec session non trouvée.
+     * Test de la méthode update avec format incorrect
      * @throws Exception
      */
     @Test
     public void testUpdateSessionFormatIncorrect() throws Exception {
-        String id = "abc"; // Mauvais format
+        String id = "abc"; // Format incorrect
 
-        ResponseEntity<?> response = sessionController.update(id, sessionDtoMock);
-        assertEquals(400, response.getStatusCodeValue());
+        mockMvc.perform(put("/api/session/" + id)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(sessionDtoMock)))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Tester la méthode delete avec succès.
+     * Test de la méthode save avec succès
      * @throws Exception
      */
     @Test
     public void testDeleteSessionSuccess() throws Exception {
         String id = "1";
-
-        // Mocker le retour de la méthode getById de SessionService
         when(sessionService.getById(Long.valueOf(id))).thenReturn(sessionMock);
 
-        ResponseEntity<?> response = sessionController.save(id);
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(delete("/api/session/" + id))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode delete avec session non trouvée.
+     * Test de la méthode save avec session non trouvée
      * @throws Exception
      */
     @Test
     public void testDeleteSessionNotFound() throws Exception {
         String id = "99"; // Non trouvé
-
-        // Mocker le retour de la méthode getById de SessionService
         when(sessionService.getById(Long.valueOf(id))).thenReturn(null);
 
-        ResponseEntity<?> response = sessionController.save(id);
-        assertEquals(404, response.getStatusCodeValue());
+        mockMvc.perform(delete("/api/session/" + id))
+                .andExpect(status().isNotFound());
     }
 
     /**
-     * Tester la méthode delete avec format incorrect.
+     * Test de la méthode save avec format incorrect
      * @throws Exception
      */
     @Test
     public void testDeleteSessionFormatIncorrect() throws Exception {
-        String id = "abc"; // Mauvais format
+        String id = "abc";
 
-        ResponseEntity<?> response = sessionController.save(id);
-        assertEquals(400, response.getStatusCodeValue());
+        mockMvc.perform(delete("/api/session/" + id))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Tester la méthode participate avec succès.
+     * Test de la méthode participate avec succès
      * @throws Exception
      */
     @Test
@@ -221,26 +242,27 @@ public class SessionControllerTests {
         String id = "1";
         String userId = "1";
 
-        ResponseEntity<?> response = sessionController.participate(id, userId);
-        assertEquals(200, response.getStatusCodeValue());
+        // Call the controller method and assert the result
+        mockMvc.perform(post("/api/session/" + id + "/participate/" + userId))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode participate avec format incorrect.
+     * Test de la méthode participate avec format incorrect
      * @throws Exception
      */
     @Test
     public void testParticipateFormatIncorrect() throws Exception {
-        // Mauvais format
+        // Format incorrect
         String id = "abc";
         String userId = "abc";
 
-        ResponseEntity<?> response = sessionController.participate(id, userId);
-        assertEquals(400, response.getStatusCodeValue());
+        mockMvc.perform(post("/api/session/" + id + "/participate/" + userId))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Tester la méthode unParticipate avec succès.
+     * Test de la méthode noLongerParticipate avec succès
      * @throws Exception
      */
     @Test
@@ -248,21 +270,21 @@ public class SessionControllerTests {
         String id = "1";
         String userId = "1";
 
-        ResponseEntity<?> response = sessionController.noLongerParticipate(id, userId);
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(delete("/api/session/" + id + "/participate/" + userId))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Tester la méthode unParticipate avec format incorrect.
+     * Test de la méthode noLongerParticipate avec format incorrect
      * @throws Exception
      */
     @Test
     public void testUnParticipateFormatIncorrect() throws Exception {
-        // Mauvais format
+        // Format incorrect
         String id = "abc";
         String userId = "abc";
 
-        ResponseEntity<?> response = sessionController.noLongerParticipate(id, userId);
-        assertEquals(400, response.getStatusCodeValue());
+        mockMvc.perform(delete("/api/session/" + id + "/participate/" + userId))
+                .andExpect(status().isBadRequest());
     }
 }

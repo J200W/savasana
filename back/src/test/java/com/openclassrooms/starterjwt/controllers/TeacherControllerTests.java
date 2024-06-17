@@ -1,3 +1,4 @@
+
 package com.openclassrooms.starterjwt.controllers;
 
 import com.openclassrooms.starterjwt.dto.TeacherDto;
@@ -7,16 +8,17 @@ import com.openclassrooms.starterjwt.services.TeacherService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Les tests de la classe TeacherController.
@@ -25,34 +27,35 @@ import static org.mockito.Mockito.when;
 public class TeacherControllerTests {
 
     /**
+     * MockMvc pour simuler les requêtes HTTP
+     */
+    private MockMvc mockMvc;
+
+    /**
+     * Objet Teacher
+     */
+    private static Teacher teacherMock;
+
+    /**
+     * Objet TeacherDto
+     */
+    private static TeacherDto teacherDtoMock;
+
+    /**
      * Mocker TeacherMapper
      */
-    @Mock
+    @MockBean
     private TeacherMapper teacherMapper;
 
     /**
      * Mocker TeacherService
      */
-    @Mock
+    @MockBean
     private TeacherService teacherService;
 
     /**
-     * Injection de dépendances de la classe TeacherController
+     * Initialisation des objets avant les tests
      */
-    @InjectMocks
-    private TeacherController teacherController;
-
-    /**
-     * Initialiser teacherMock
-     */
-    private static Teacher teacherMock;
-
-    /**
-     * Initialiser teacherDtoMock
-     */
-    private static TeacherDto teacherDtoMock;
-
-
     @BeforeAll
     static void beforeAll() {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -60,60 +63,59 @@ public class TeacherControllerTests {
         teacherDtoMock = new TeacherDto(1L, "John", "Doe", localDateTime, localDateTime);
     }
 
+    /**
+     * Initialisation du MockMvc avant chaque test
+     */
     @BeforeEach
-    void beforeEach() {
+    void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(new TeacherController(
+                teacherService,
+                teacherMapper)
+        ).build();
     }
 
     /**
-     * Test de la méthode findTeacherById.
+     * Test de la méthode findById de TeacherController.
      * @throws Exception
      */
     @Test
     public void testFindTeacherById() throws Exception {
-        // Mocker la méthode findById
         when(teacherService.findById(1L)).thenReturn(teacherMock);
-        // Mocker la méthode toDto
         when(teacherMapper.toDto(teacherMock)).thenReturn(teacherDtoMock);
-
-        ResponseEntity<?> result = teacherController.findById("1");
-        assertEquals(200, result.getStatusCodeValue());
+        this.mockMvc.perform(get("/api/teacher/1"))
+                .andExpect(status().isOk());
     }
 
     /**
-     * Test de la méthode findTeacherById avec un id non trouvé.
+     * Test de la méthode findById de TeacherController avec un id non trouvé.
      * @throws Exception
      */
     @Test
     public void testFindTeacherByIdNotFound() throws Exception {
-        // Mocker la méthode findById
         when(teacherService.findById(1L)).thenReturn(null);
-
-        ResponseEntity<?> result = teacherController.findById("1");
-        assertEquals(404, result.getStatusCodeValue());
+        this.mockMvc.perform(get("/api/teacher/1"))
+                .andExpect(status().isNotFound());
     }
 
     /**
-     * Test de la méthode findTeacherById avec un id incorrect.
+     * Test de la méthode findById de TeacherController avec un id incorrect.
      * @throws Exception
      */
     @Test
     public void testFindTeacherByIdFormatIncorrect() throws Exception {
-        ResponseEntity<?> result = teacherController.findById("a"); // id incorrect
-        assertEquals(400, result.getStatusCodeValue());
+        this.mockMvc.perform(get("/api/teacher/abc"))
+                .andExpect(status().isBadRequest());
     }
 
     /**
-     * Test de la méthode findAllTeachers.
+     * Test de la méthode findAll de TeacherController.
      * @throws Exception
      */
     @Test
     public void testFindAllTeachers() throws Exception {
-        // Mocker la méthode findAll
         when(teacherService.findAll()).thenReturn(List.of(teacherMock));
-        // Mocker la méthode toDto
         when(teacherMapper.toDto(List.of(teacherMock))).thenReturn(List.of(teacherDtoMock));
-
-        ResponseEntity<?> result = teacherController.findAll();
-        assertEquals(200, result.getStatusCodeValue());
+        this.mockMvc.perform(get("/api/teacher"))
+                .andExpect(status().isOk());
     }
 }
