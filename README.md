@@ -101,4 +101,8 @@ Ou pour un test spécifique:
 
 > mvn test -Dtest=TestClassName
 
+Le rapport est disponible ici:
+
+> back/target/site/jacoco/index.html
+ 
 <img width="700" alt="Capture d’écran 2024-06-17 à 20 46 40" src="https://github.com/J200W/savasana/assets/94389835/7065d4ff-8185-4c6c-bea2-ac8453b88ccb">
